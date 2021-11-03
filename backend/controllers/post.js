@@ -1,0 +1,85 @@
+const models = require('../models');
+const jwt = require('../middlewares/jwt');
+
+
+exports.createPost = async (req, res, next) => {
+
+    const headerAuth = req.headers['authorization'];
+    const userId = jwt.getUserId(headerAuth)
+
+    const title = req.body.title;
+    const content = req.body.content;
+
+    try {
+        const user = await models.User.findOne({ where: { id: userId } })
+
+        const post = await models.Post.create({
+            title: title,
+            content: content,
+            likes: 0,
+            UserId: user.id
+        })
+
+        return res.json(post)
+    }
+    catch {
+        console.log(err)
+        return res.status(500).json({ 'error': 'Something went wrong' });
+    }
+}
+
+exports.modifyPost = async (req, res, next) => {
+
+    const headerAuth = req.headers['authorization'];
+    const userId = jwt.getUserId(headerAuth)
+
+    const title = req.body.title;
+    const content = req.body.content;
+
+    try {
+        const post = await models.Post.findOne({ where: { id: userId } })
+
+            post.title = title,
+            post.content = content
+
+        return res.json(post)
+    }
+    catch {
+        console.log(err)
+        return res.status(500).json({ 'error': 'Something went wrong' });
+    }
+}
+
+exports.deletePost = async (req, res, next) => {
+    
+    const headerAuth = req.headers['authorization'];
+    const userId = jwt.getUserId(headerAuth)
+    const postId = parseInt(req.params.postId);
+
+    try {
+        const post = await models.Post.findOne({ where: { userId: userId, id: postId } })
+        console.log(post.id)
+        
+        await post.destroy();
+
+        res.status(200).json({ message : 'post deleted' })
+    }
+
+    catch(err) {
+        console.log(err)
+        return res.status(500).json({ err });
+    }
+
+}
+
+exports.getAllPosts = async (req, res, next) => {
+    try {
+        const posts = await models.Post.findAll({ include: ['user', 'Tests'] })
+        
+        return res.json(posts)
+    }
+    catch {
+        console.log(err)
+        return res.status(500).json({ 'error': 'Something went wrong' });
+    }
+}

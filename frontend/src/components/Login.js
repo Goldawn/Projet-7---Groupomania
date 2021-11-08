@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 
 class Login extends React.Component {
@@ -27,6 +27,7 @@ class Login extends React.Component {
   }
 
   submitHandler = e => {
+    // let history = useHistory();
     e.preventDefault()
     console.log(this.state)
 
@@ -43,6 +44,7 @@ class Login extends React.Component {
           res.json().then(data => {
             this.saveData('authToken', JSON.stringify({ "userId":data.userId, "token":data.token}))
           })
+          // history.push('/')
         }
       })
     }

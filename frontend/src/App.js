@@ -5,7 +5,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
 import PostList from './components/PostList';
-import Post from './components/Post';
+import Comment from './components/Comment';
+import {DetailPost} from './components/Post';
 
 
 class App extends Component {
@@ -50,7 +51,6 @@ class App extends Component {
 
   render() {
     const isAuthenticated = this.state.isAuthenticated;
-    console.log(isAuthenticated)
     if(!isAuthenticated) {
       return(
         <div className="App">
@@ -71,7 +71,7 @@ class App extends Component {
 
             <Switch>
               <Route path="/" exact component={PostList}/>
-              <Route path="/post/" component={Post}/>
+              <Route path="/post/" component={DetailPost}/>
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
               <Route path="/profile" component={Profile}/>

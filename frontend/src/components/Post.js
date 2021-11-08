@@ -24,6 +24,8 @@ import { Card, Button } from 'react-bootstrap';
   
 // export default Post;
 
+export const DetailPost = ({ ...props }) => (   <Post detail={true} {...props} /> );
+
 class Post extends Component {
 
     constructor(props) {
@@ -31,22 +33,26 @@ class Post extends Component {
    
     }
 
-    render() {
+    componentDidMount() {
         console.log(this.props.item)
+    }
+
+    render() {
+        const item = this.props.item ? this.props.item : this.props.location.state.item;
         return(
 
-            <Card key={this.props.item.id} style={{ width: '400px', margin: '10px auto' }}>
+            <Card key={item.id} style={{ width: '400px', margin: '10px auto' }}>
                 <Card.Body>
-                    <Card.Title>{this.props.item.title }{' '+ this.props.item.id }</Card.Title>
+                    <Card.Title>{item.title }{' '+item.id }</Card.Title>
                 </Card.Body>
                 <Card.Img variant="top" src="" />
                 <Card.Body>
                     <Card.Text>
-                        { this.props.item.content }
+                        { item.content }
                     </Card.Text>
                     <Button variant="primary">like</Button>
                     <Button variant="primary">dislike</Button>
-                    <Link to={"post/"+String(this.props.item.id)}>comment</Link>
+                    {!this.props.detail && <Link to={{pathname: "post/"+String(item.id), state: {item: item}}}>comment</Link>}
                 </Card.Body>
             </Card>
          )

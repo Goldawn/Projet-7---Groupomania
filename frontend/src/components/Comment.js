@@ -1,23 +1,13 @@
-function Comment() {
+import React, { useEffect } from 'react';
 
-    fetch("http://localhost:9000/api/posts")
-            .then((res) => res.json())
-            .then((json) => {
-                this.setState({
-                    items: json,
-                    DataisLoaded: true
-                });
-            })
+function Comment(props) {
 
-
-    return  <div>
-        <h1>Titre du commentaire</h1>
-        <p>Contenu du commentaire</p>
-        <ul className="likes-bar">
-            <li className="upvote">+</li>
-            <li className="downvote">-</li>
-        </ul>
-    </div>
+    useEffect(() => console.log(props))
+    const {item} = props.location.state
+    return(
+        <div>
+            {JSON.stringify(item)}
+        </div>
+    )
 }
-  
 export default Comment;

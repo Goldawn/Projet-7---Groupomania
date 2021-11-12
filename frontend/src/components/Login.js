@@ -1,20 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 
 
-class Login extends React.Component {
+const Login = (props) => {
 
-  constructor(props) {
-    super(props);
+  const [login, setLogin] = useState({
+    email: "",
+    password:""
+  })
+  const history = useHistory()
 
-    this.state = { 
-      email: '',
-      password: ''
-     }
-  }
-
-  saveData(key, value) {
+   const saveData = (key, value) => {
     if(localStorage){
         localStorage.setItem(key, value);
     }else {
@@ -22,19 +19,22 @@ class Login extends React.Component {
     }
   }
 
-  changeHandler = e => {
-    this.setState({ [e.target.name]: e.target.value })
+  const changeHandler = e => {
+    setLogin((previousState) => ({
+      ...previousState,
+      [e.target.name]: e.target.value
+    })
+    )
   }
 
-  submitHandler = e => {
-    // let history = useHistory();
+  const submitHandler = e => {
     e.preventDefault()
-    console.log(this.state)
+    console.log(login)
 
     fetch('http://localhost:9000/api/user/login', {
       method: 'POST' ,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state)})
+      body: JSON.stringify(login)})
 
       .then((res) => {
         if(res.status !== 200) {
@@ -42,25 +42,25 @@ class Login extends React.Component {
         }
         else {
           res.json().then(data => {
-            this.saveData('authToken', JSON.stringify({ "userId":data.userId, "token":data.token}))
+            saveData('authToken', JSON.stringify({ "userId":data.userId, "token":data.token}))
           })
-          // history.push('/')
+          history.push('/')
         }
       })
     }
 
-  render() {
-      const { email, password } = this.state
+    const { email, password } = login
+
       return (
-      <Form onSubmit={this.submitHandler}>
+      <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" name='email' value={email} placeholder="Enter email" onChange={this.changeHandler} />
+          <Form.Control type="email" name='email' value={email} placeholder="Enter email" onChange={changeHandler} />
         </Form.Group>
       
         <Form.Group className="mb-3" controlId="formGroupPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" name='password' value={password} placeholder="Password" onChange={this.changeHandler} />
+          <Form.Control type="password" name='password' value={password} placeholder="Password" onChange={changeHandler} />
         </Form.Group>
       
         <Button variant="primary" type="submit">
@@ -76,7 +76,6 @@ class Login extends React.Component {
         </Form.Group>
       </Form>
     )
-  }
 
 }
 

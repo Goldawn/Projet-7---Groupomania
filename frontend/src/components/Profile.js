@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { Redirect } from 'react-router';
 
 
 class Profile extends Component {
@@ -8,6 +10,7 @@ class Profile extends Component {
         super(props);
 
         this.state = {
+            redirect: false,
             profileData: {},
             DataisLoaded: false
         };
@@ -23,13 +26,19 @@ class Profile extends Component {
           }
         })
     
-        .then((res) => res.json())
-        .then((json) => {
-            this.setState({
-                profileData: json,
-                DataisLoaded: true
-            });
-        })
+        .then((res) => res.json().then((json) => {
+            console.log(json)
+            if(!json) {
+                console.log("token incorrect")
+                this.setState({ redirect: true })
+            }
+            else {                
+                this.setState({
+                    profileData: json,
+                    DataisLoaded: true
+                });
+            }      
+        }))
     }
 
     loadData(key) {
@@ -42,10 +51,17 @@ class Profile extends Component {
         }
     }
 
+    // sayYo() {
+    //     console.log('yo')
+    // }
+
+    // handleClick(e) {
+    //     this.sayYo();
+    // }
+
     componentDidMount() {
 
         const auth = JSON.parse(this.loadData("authToken"))
-        console.log(auth.token)
         const bearer = "Bearer "+auth.token
         this.getData(bearer);
     }
@@ -53,25 +69,32 @@ class Profile extends Component {
     
     render() {
 
-        const { DataisLoaded, profileData } = this.state;
-        console.log(profileData)
+        const { redirect, DataisLoaded, profileData } = this.state;
 
-        if (!DataisLoaded) return (
+        if ( redirect ) {
+            return <Redirect to='/login'/>;
+        }
+        else if (!DataisLoaded) {
+            return (
             <div className="App">No data</div>
-        )
-
+            )
+        }
         return  (
             <div className="App">
-                <h1>Profile</h1>
-                <p className="App-intro">{profileData.username}</p>
-                <p className="App-intro">{profileData.email}</p>
-                <p className="App-intro">{profileData.bio}</p>
+                <Card style={{ width: '400px', margin: '0 auto 60px'}}>
+                    <h1>Profile</h1>
+                    <p className="App-intro">{profileData.username}</p>
+                    <p className="App-intro">{profileData.email}</p>
+                    <p className="App-intro">{profileData.bio}</p>
+                    <Link to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Edit profile</Link>
+                    {/* <Button variant="primary" onClick={this.handleClick.bind(this)}>Edit profile</Button> */}
+                </Card>
 
                 {
                     profileData.posts.map((item) => { 
                             // debugger
                             return( 
-                            <Card key={item.id} style={{ width: '80%' }}>
+                            <Card key={item.id} style={{ width: '400px', margin: '20px auto 0'}}>
                             <Card.Body>
                                 <Card.Title>{ item.title }{ item.id }</Card.Title>
                             </Card.Body>

@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
 import Post from './Post';
 
@@ -59,14 +59,6 @@ class PostList extends Component {
                                 <div>
                                     <Post item={item}/>
                                 </div>
-                        // item.Tests.map((comment) => {
-                        //     return(
-                        //         <div>
-                        //             <p>{ comment.title }</p>
-                        //             <p>{ comment.content }</p>
-                        //         </div>
-                        //     )
-                        // })
                             )
                         })
                     }

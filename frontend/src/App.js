@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
+import EditProfile from './components/EditProfile';
 import PostList from './components/PostList';
-import Comment from './components/Comment';
 import {DetailPost} from './components/Post';
 
 
@@ -19,12 +19,6 @@ class App extends Component {
    };
   }
 
-  callAPI() {
-        fetch("http://localhost:9000/api/posts")
-        .then(res => res.text())
-        .then(res => this.setState({ apiResponse: res }))
-  }
-
   loadData(key) {
     if(localStorage){
         if(key in localStorage) {
@@ -36,7 +30,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.callAPI();
     const auth = this.loadData("authToken")
     
     if(!auth) {
@@ -66,14 +59,15 @@ class App extends Component {
       return (
         <div className="App">
           <h1>Groupomania</h1>
-          {/* <p className="App-intro">{this.state.apiResponse}</p> */}
+          <p><a href="/login">se connecter</a></p>
+          <a href="/profile">profil</a>
           <Router forceRefresh={true}>
-
             <Switch>
               <Route path="/" exact component={PostList}/>
               <Route path="/post/" component={DetailPost}/>
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
+              <Route path="/profile/edit" component={EditProfile}/>
               <Route path="/profile" component={Profile}/>
               <Route path="/" component= {() => <div>Erreur 404</div>} />
             </Switch>

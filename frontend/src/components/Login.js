@@ -45,9 +45,9 @@ const Login = (props) => {
             saveData('authToken', JSON.stringify({ "userId":data.userId, "token":data.token}))
           })
           history.push('/')
-        }
-      })
-    }
+      }
+    })
+  }
 
     const { email, password } = login
 

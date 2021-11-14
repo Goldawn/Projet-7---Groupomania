@@ -54,7 +54,6 @@ class PostList extends Component {
                 <div className = "Post">
                     <h1> Fetch data from an api in react </h1>  {
                         items.map((item) => {
-                            // debugger
                             return(
                                 <div>
                                     <Post item={item}/>

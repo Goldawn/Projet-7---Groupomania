@@ -22,7 +22,7 @@ exports.createPost = async (req, res, next) => {
 
         return res.json(post)
     }
-    catch {
+    catch(err) {
         console.log(err)
         return res.status(500).json({ 'error': 'Something went wrong' });
     }
@@ -32,19 +32,22 @@ exports.modifyPost = async (req, res, next) => {
 
     const headerAuth = req.headers['authorization'];
     const userId = jwt.getUserId(headerAuth)
+    const postId = parseInt(req.params.postId);
 
     const title = req.body.title;
     const content = req.body.content;
 
     try {
-        const post = await models.Post.findOne({ where: { id: userId } })
+        const post = await models.Post.findOne({ where: { id: userId, id: postId } })
 
             post.title = title,
             post.content = content
 
+            await post.save()
+
         return res.json(post)
     }
-    catch {
+    catch(err) {
         console.log(err)
         return res.status(500).json({ 'error': 'Something went wrong' });
     }

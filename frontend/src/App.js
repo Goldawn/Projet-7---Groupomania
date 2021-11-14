@@ -6,7 +6,9 @@ import Register from './components/Register';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
 import PostList from './components/PostList';
+import CreatePost from './components/CreatePost';
 import {DetailPost} from './components/Post';
+import EditPost from './components/EditPost';
 
 
 class App extends Component {
@@ -58,18 +60,22 @@ class App extends Component {
 
       return (
         <div className="App">
-          <h1>Groupomania</h1>
+          <h1><a href="/">Groupomania</a></h1>
           <p><a href="/login">se connecter</a></p>
-          <a href="/profile">profil</a>
+          <p><a href="/profile">profil</a></p>
+          <p><a href="/post/new">créer un post</a></p>
+
           <Router forceRefresh={true}>
             <Switch>
               <Route path="/" exact component={PostList}/>
+              <Route path="/post/:postId/edit" component={EditPost}/>
+              <Route path="/post/new" component={CreatePost}/>
               <Route path="/post/" component={DetailPost}/>
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>
               <Route path="/profile/edit" component={EditProfile}/>
               <Route path="/profile" component={Profile}/>
-              <Route path="/" component= {() => <div>Erreur 404</div>} />
+              <Route path="/" component= {() => <div>Erreur 404</div>}/>
             </Switch>
           </Router>
         </div>

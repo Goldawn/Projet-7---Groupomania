@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
 import Comment from './Comment';
 
@@ -12,8 +12,48 @@ class Post extends Component {
    
     }
 
+    loadData = (key) => {
+        if(localStorage){
+          if(key in localStorage) {
+              return localStorage.getItem(key);
+            }
+          } else {
+          alert("Web Storage is not supported");
+        }
+    }
+
     componentDidMount() {
         console.log(this.props.item)
+    }
+
+    
+
+    deletePost = (postId, bearer) => {
+        fetch(`http://localhost:9000/api/posts/${postId}`, {
+            method: 'DELETE',
+            headers: { 
+                "Content-Type": "application/json",
+                "authorization": bearer
+            }
+        })
+        .then((res) => {
+            if(res.status !== 200) {
+            console.log(res)
+            }
+            else {
+            res.json().then(data => {
+                console.log(data)
+            })
+            //  <Redirect to='/'/>;
+            }
+        })
+    }
+    
+
+    handleClick = (id) => {
+        const auth = JSON.parse(this.loadData("authToken"))
+        const bearer = "Bearer "+auth.token
+        this.deletePost(id, bearer)
     }
 
     render() {
@@ -30,9 +70,11 @@ class Post extends Component {
                         <Card.Text>
                             { item.content }
                         </Card.Text>
-                        <Button variant="primary">like</Button>
-                        <Button variant="primary">dislike</Button>
-                        {!this.props.detail && <Link to={{pathname: "post/"+String(item.id), state: {item: item}}}>comment</Link> }
+                        <Button variant="success">+</Button>
+                        <Button variant="danger">-</Button>
+                        {!this.props.detail && <Link to={{pathname: "/post/"+String(item.id), state: {item: item}}}>comment</Link> }
+                        <Link to={{pathname: "/post/"+String(item.id)+"/edit", state: {item: item} }}>edit</Link>
+                        <Button variant="danger" id={item.id} onClick={() => this.handleClick(item.id)}>delete</Button>
                     </Card.Body>
                 </Card>
                 

@@ -8,7 +8,7 @@ exports.createTest = async (req, res, next) => {
     const userId = jwt.getUserId(headerAuth);
     // const postId = parseInt(req.params.postId);
     // console.log(req.params)
-    const postId = 2;
+    const postId = 1;
     const title = req.body.title;
     const content = req.body.content;
 

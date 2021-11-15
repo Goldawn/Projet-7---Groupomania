@@ -7,6 +7,8 @@ import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
 import PostList from './components/PostList';
 import CreatePost from './components/CreatePost';
+import CreateComment from './components/CreateComment';
+import EditComment from './components/EditComment';
 import {DetailPost} from './components/Post';
 import EditPost from './components/EditPost';
 
@@ -70,6 +72,8 @@ class App extends Component {
               <Route path="/" exact component={PostList}/>
               <Route path="/post/:postId/edit" component={EditPost}/>
               <Route path="/post/new" component={CreatePost}/>
+              <Route path="/post/:postId/comment/:commentId/edit" component={EditComment}/>
+              <Route path="/post/:postId/comment/new" component={CreateComment}/>
               <Route path="/post/" component={DetailPost}/>
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>

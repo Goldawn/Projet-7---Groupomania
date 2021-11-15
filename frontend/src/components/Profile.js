@@ -51,14 +51,6 @@ class Profile extends Component {
         }
     }
 
-    // sayYo() {
-    //     console.log('yo')
-    // }
-
-    // handleClick(e) {
-    //     this.sayYo();
-    // }
-
     componentDidMount() {
 
         const auth = JSON.parse(this.loadData("authToken"))

@@ -9,15 +9,17 @@ exports.createPost = async (req, res, next) => {
 
     const title = req.body.title;
     const content = req.body.content;
+    console.log(userId)
 
     try {
         const user = await models.User.findOne({ where: { id: userId } })
+        console.log(user.id)
 
         const post = await models.Post.create({
             title: title,
             content: content,
             likes: 0,
-            UserId: user.id
+            userId: user.id
         })
 
         return res.json(post)

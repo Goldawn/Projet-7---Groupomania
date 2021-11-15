@@ -43,8 +43,8 @@ class Post extends Component {
             else {
             res.json().then(data => {
                 console.log(data)
+                // return <Redirect to='/'/>;
             })
-            //  <Redirect to='/'/>;
             }
         })
     }
@@ -72,16 +72,18 @@ class Post extends Component {
                         </Card.Text>
                         <Button variant="success">+</Button>
                         <Button variant="danger">-</Button>
-                        {!this.props.detail && <Link to={{pathname: "/post/"+String(item.id), state: {item: item}}}>comment</Link> }
+                        {!this.props.detail && <Link style={{margin: '10px'}} to={{pathname: "/post/"+String(item.id)+"/", state: {item: item}}}>comment</Link> }
+                        {this.props.detail && <Link style={{margin: '10px'}} to={{pathname: "comment/new", state: {item: item}}}>write a comment</Link> }
                         <Link to={{pathname: "/post/"+String(item.id)+"/edit", state: {item: item} }}>edit</Link>
                         <Button variant="danger" id={item.id} onClick={() => this.handleClick(item.id)}>delete</Button>
                     </Card.Body>
                 </Card>
                 
+                
                 {item.Tests.map( (comment) => {
                     console.log(comment)
                     return(
-                        <Comment comment={comment}/>
+                        this.props.detail && <Comment comment={comment}/>
                     )
                 })}
             </div>

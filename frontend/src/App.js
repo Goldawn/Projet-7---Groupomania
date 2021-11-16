@@ -19,8 +19,20 @@ class App extends Component {
     super(props);
     this.state = { 
       apiResponse: "",
-      isAuthenticated: ""
+      isAuthenticated: "",
+      auth: ""
    };
+  }
+
+  logout() {
+    this.setState({isAuthenticated: false})
+    return localStorage.removeItem('authToken');
+
+    // redirection
+  }
+
+  handleClick() {
+    this.logout();
   }
 
   loadData(key) {
@@ -42,9 +54,18 @@ class App extends Component {
     }
     else {
       console.log("authentifié")
-      this.setState({isAuthenticated: true})
+      this.setState({
+        isAuthenticated: true,
+        auth: auth
+      })
     }
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if(prevState.isAuthenticated !== this.state.isAuthenticated) {
+  //     console.log("change of state")
+  //   }
+  // }
 
   render() {
     const isAuthenticated = this.state.isAuthenticated;
@@ -52,8 +73,11 @@ class App extends Component {
       return(
         <div className="App">
           <h1>Groupomania</h1>
-          <Router forceRefresh={true}>            
+          <Router forceRefresh={true}>     
+            <Switch>       
+              <Route path="/register" component={Register}/>
               <Route path="/" component={Login}/>
+            </Switch>  
           </Router>
         </div>
       )
@@ -64,6 +88,8 @@ class App extends Component {
         <div className="App">
           <h1><a href="/">Groupomania</a></h1>
           <p><a href="/login">se connecter</a></p>
+          {/* <p><a href="/logout">se déconnecter</a></p> */}
+          <button onClick={this.handleClick.bind(this)} >se déconnecter</button>
           <p><a href="/profile">profil</a></p>
           <p><a href="/post/new">créer un post</a></p>
 

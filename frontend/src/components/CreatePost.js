@@ -60,22 +60,25 @@ const CreatePost = (props) => {
 
     const { title, content } = createPost
 
-    return <Form onSubmit={submitHandler}>
+    return (
+
+        <Form onSubmit={submitHandler}>
         
-        <Form.Group className="mb-3" controlId="formGroupPassword">
-            <Form.Label>Post title</Form.Label>
-            <Form.Control type="text" name="title" value={title} placeholder="Post title" onChange={changeHandler} />
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formGroupPostTitle">
+                <Form.Label>Post title</Form.Label>
+                <Form.Control type="text" name="title" value={title} placeholder="Post title" onChange={changeHandler} />
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formGroupPassword">
-            <Form.Label>post content</Form.Label>
-            <Form.Control type="textarea" name="content" value={content} placeholder="Post content" onChange={changeHandler} />
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formGroupPostContent">
+                <Form.Label>post content</Form.Label>
+                <Form.Control type="textarea" name="content" value={content} placeholder="Post content" onChange={changeHandler} />
+            </Form.Group>
 
-        <Button variant="primary" type="submit">
-            Create
-        </Button>
-    </Form>
+            <Button variant="primary" type="submit">
+                Create
+            </Button>
+        </Form>
+    )
 
 }
 

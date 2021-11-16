@@ -1,37 +1,79 @@
-import React from 'react';
+import React, { useState }from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 
-class Register extends React.Component {
+const Register = (props) => {
 
-    render() {
-        return <Form>
-                <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                </Form.Group>
+    const [register, setRegister] = useState({
+        email: "",
+        username: "",
+        password: "",
+        bio: ""
+    })
 
-                <Form.Group className="mb-3" controlId="formGroupPassword">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" placeholder="Username" />
-                </Form.Group>
+    const history = useHistory()
 
-                <Form.Group className="mb-3" controlId="formGroupPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formGroupPassword">
-                    <Form.Label>Bio</Form.Label>
-                    <Form.Control type="textarea" placeholder="Bio" />
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
-                    Valider
-                </Button>
-            </Form>
+    const changeHandler = e => {
+        setRegister((previousState) => ({
+          ...previousState,
+          [e.target.name]: e.target.value
+        })
+        )
     }
 
+    const submitHandler = e => {
+        e.preventDefault()
+        // console.log(createPost)
+
+    fetch('http://localhost:9000/api/user/signup', {
+        method: 'POST' ,
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(register)})
+
+        .then((res) => {
+            if(res.status !== 200) {
+                console.log(res)
+            }
+            else {
+                res.json().then(data => {
+                  console.log(data)
+                })
+                history.push('/login')
+            }
+        })
+    }
+
+    const { email, username, password, bio } = register
+    
+    return (
+
+        <Form onSubmit={submitHandler}>
+            <Form.Group className="mb-3" controlId="formGroupEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" name="email" placeholder="Enter email" value={email} onChange={changeHandler} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formGroupUsername">
+                <Form.Label>Username</Form.Label>
+                <Form.Control type="text" name="username" placeholder="Username" value={username} onChange={changeHandler} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formGroupPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" name="password" placeholder="Password" value={password} onChange={changeHandler} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formGroupBio">
+                <Form.Label>Bio</Form.Label>
+                <Form.Control type="textarea" name="bio" placeholder="Bio" value={bio} onChange={changeHandler} />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+                Valider
+            </Button>
+        </Form>
+    )
 
 
 }

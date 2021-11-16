@@ -1,0 +1,10 @@
+- Ajouter les images pour les Posts / Comments
+- Ajouter les likes/dislikes
+- Ajouter les gestion des roles et autorisations
+- Corriger le problème de param dans la requête backend de création de commentaire.
+- Gérer les suppressions en cascade
+- Gérer les states des composants pour afficher les bons composants et gérer les redirections.
+- Ajouter les styles aux divers composants
+- Optimiser le code existant et effacer le code inutilisé ( ex: backend/comments, console.log... )
+- Passer la durée de vie du token à 24h
+- Rédiger le Readme

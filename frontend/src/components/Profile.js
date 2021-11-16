@@ -58,6 +58,32 @@ class Profile extends Component {
         this.getData(bearer);
     }
 
+    deleteProfile = (bearer) => {
+        fetch(`http://localhost:9000/api/user/profile`, {
+            method: 'DELETE',
+            headers: { 
+                "Content-Type": "application/json",
+                "authorization": bearer
+            }
+        })
+        .then((res) => {
+            if(res.status !== 200) {
+            console.log(res)
+            }
+            else {
+            res.json().then(data => {
+                console.log(data)
+            })
+            }
+        })
+    }
+
+    handleClick() {
+        const auth = JSON.parse(this.loadData("authToken"))
+        const bearer = "Bearer "+auth.token
+        this.deleteProfile(bearer)
+    }
+
     
     render() {
 
@@ -79,7 +105,7 @@ class Profile extends Component {
                     <p className="App-intro">{profileData.email}</p>
                     <p className="App-intro">{profileData.bio}</p>
                     <Link to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Edit profile</Link>
-                    {/* <Button variant="primary" onClick={this.handleClick.bind(this)}>Edit profile</Button> */}
+                    <Button variant="danger" onClick={() => this.handleClick()}>delete</Button>
                 </Card>
 
                 {

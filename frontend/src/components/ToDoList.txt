@@ -5,6 +5,8 @@
 - Gérer les suppressions en cascade
 - Gérer les states des composants pour afficher les bons composants et gérer les redirections.
 - Ajouter les styles aux divers composants
+- Gérer les retours de réponses backend ( filter password, etc.. )
 - Optimiser le code existant et effacer le code inutilisé ( ex: backend/comments, console.log... )
+- Ajouter les variables d'environnement
 - Passer la durée de vie du token à 24h
 - Rédiger le Readme

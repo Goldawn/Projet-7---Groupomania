@@ -1,0 +1,46 @@
+.card {
+    background: rgb(27, 27, 27);
+    color: white;
+    width: 600px;
+    margin: 20px auto 0;
+}
+.image-container {
+    width: 100%;
+    background: black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+.card-content {
+    margin: 25px 0;
+}
+.sub-post {
+    display: flex;
+    justify-content: space-between;
+}
+.left-buttons .post-button{
+    margin-right: 10px;
+}
+.right-buttons .post-button{
+    margin-left: 10px;
+}
+.post-button {
+    min-width: 50px;
+    background-color: #501c94;
+    border: 1px solid #501c94;
+}
+.post-link {
+    padding: 7px 12px 8px;
+    background-color: #501c94;
+    border: 1px solid #501c94;
+    vertical-align: middle;
+    border-radius: .25rem;
+}
+.post-link:hover, .post-button:hover {
+    color: inherit;
+    background-color: #44197c;
+    border-color: #44197c;
+}
+.post-card p {
+    font-size: 14px;
+}

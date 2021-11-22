@@ -1,16 +1,19 @@
 import { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Login from './components/Login';
-import Register from './components/Register';
-import Profile from './components/Profile';
-import EditProfile from './components/EditProfile';
-import PostList from './components/PostList';
-import CreatePost from './components/CreatePost';
-import CreateComment from './components/CreateComment';
-import EditComment from './components/EditComment';
-import {DetailPost} from './components/Post';
-import EditPost from './components/EditPost';
+import Header from './components/Header/Header';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
+import Profile from './components/Profile/Profile';
+import EditProfile from './components/EditProfile/EditProfile';
+import PostList from './components/PostList/PostList';
+import CreatePost from './components/CreatePost/CreatePost';
+import CreateComment from './components/CreateComment/CreateComment';
+import EditComment from './components/EditComment/EditComment';
+import {DetailPost} from './components/Post/Post';
+import EditPost from './components/EditPost/EditPost';
+
+import './App.css'
 
 
 class App extends Component {
@@ -24,16 +27,16 @@ class App extends Component {
    };
   }
 
-  logout() {
-    this.setState({isAuthenticated: false})
-    return localStorage.removeItem('authToken');
+  // logout() {
+  //   this.setState({isAuthenticated: false})
+  //   return localStorage.removeItem('authToken');
 
-    // redirection
-  }
+  // redirection
+  // }
 
-  handleClick() {
-    this.logout();
-  }
+  // handleClick() {
+  //   this.logout();
+  // }
 
   loadData(key) {
     if(localStorage){
@@ -86,13 +89,7 @@ class App extends Component {
 
       return (
         <div className="App">
-          <h1><a href="/">Groupomania</a></h1>
-          <p><a href="/login">se connecter</a></p>
-          {/* <p><a href="/logout">se déconnecter</a></p> */}
-          <button onClick={this.handleClick.bind(this)} >se déconnecter</button>
-          <p><a href="/profile">profil</a></p>
-          <p><a href="/post/new">créer un post</a></p>
-
+         <Header/>
           <Router forceRefresh={true}>
             <Switch>
               <Route path="/" exact component={PostList}/>

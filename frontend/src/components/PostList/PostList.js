@@ -1,7 +1,9 @@
 import { Component } from 'react';
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
-import Post from './Post';
+import Post from '../Post/Post';
+
+import "./PostList.css"
 
 
 class PostList extends Component {
@@ -33,7 +35,7 @@ class PostList extends Component {
         console.log(this.state.items)
         if (!dataIsLoaded) return (
 
-            <Card style={{ width: '80%' }}>
+            <Card style={{ width: '600px' }}>
                 <Card.Body>
                     <Card.Title>Card Title</Card.Title>
                 </Card.Body>
@@ -51,8 +53,13 @@ class PostList extends Component {
         )
 
             return (
-                <div className = "Post">
-                    <h1> Fetch data from an api in react </h1>  {
+                <div id="all-posts">
+
+                    <div id="create-post-container">
+                        <Link className="post-link create-post" to={{pathname: "/post/new" }}>Créer un post</Link>
+                    </div>
+                    
+                    {
                         items.map((item) => {
                             return(
                                 <div>

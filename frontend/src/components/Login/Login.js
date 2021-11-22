@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 
+import './Login.css'
+
 
 const Login = (props) => {
 
@@ -52,7 +54,7 @@ const Login = (props) => {
     const { email, password } = login
 
       return (
-      <Form onSubmit={submitHandler}>
+      <Form id="form" onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control type="email" name='email' value={email} placeholder="Enter email" onChange={changeHandler} />
@@ -63,14 +65,17 @@ const Login = (props) => {
           <Form.Control type="password" name='password' value={password} placeholder="Password" onChange={changeHandler} />
         </Form.Group>
       
-        <Button variant="primary" type="submit">
-          Valider
-        </Button>
-        <Form.Group>
+        <div id="submit-button">
+          <Button className="post-button" type="submit">
+            Valider
+          </Button>
+        </div>
+        
+        <Form.Group id="register-block">
           <Form.Text className="text-muted">
-            Vous n'avez pas encore de compte
-            <Link to="/register">
-              <p>Créer un compte</p>
+            <p>Vous n'avez pas encore de compte</p>
+            <Link className="post-button post-link" to="/register">
+              Créer un compte
             </Link>
           </Form.Text>
         </Form.Group>

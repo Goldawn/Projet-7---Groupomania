@@ -7,8 +7,10 @@ exports.createPost = async (req, res, next) => {
     const headerAuth = req.headers['authorization'];
     const userId = jwt.getUserId(headerAuth)
 
+    
     const title = req.body.title;
     const content = req.body.content;
+    // const attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
     console.log(userId)
 
     try {
@@ -18,6 +20,7 @@ exports.createPost = async (req, res, next) => {
         const post = await models.Post.create({
             title: title,
             content: content,
+            // attachment: attachment,
             likes: 0,
             userId: user.id
         })

@@ -59,7 +59,6 @@ const EditComment = (props) => {
           res.json().then(data => {
             console.log(data)
           })
-        //   history.push(`/post/${postId}/`)
           history.push("/")
         }
       })
@@ -68,7 +67,7 @@ const EditComment = (props) => {
     const { title, content } = commentData
 
       return (
-        <Form onSubmit={submitHandler}>
+        <Form id="form" onSubmit={submitHandler}>
         
           <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Label>Post title</Form.Label>
@@ -77,13 +76,15 @@ const EditComment = (props) => {
 
           <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Label>post content</Form.Label>
-              <Form.Control type="textarea" name="content" value={content} placeholder="Post content" onChange={changeHandler} />
+              <Form.Control as="textarea" type="textarea" name="content" value={content} placeholder="Post content" onChange={changeHandler} />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
-              Save changes
-          </Button>
-      </Form>
+          <div id="submit-button">
+            <Button className="post-button" type="submit">
+              Enregistrer les modifications
+            </Button>
+          </div>
+        </Form>
     )
 
 }

@@ -2,6 +2,8 @@ import React, { useState }from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
+import "./Register.css"
+
 
 const Register = (props) => {
 
@@ -48,7 +50,7 @@ const Register = (props) => {
     
     return (
 
-        <Form onSubmit={submitHandler}>
+        <Form id="form" onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="formGroupEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" name="email" placeholder="Enter email" value={email} onChange={changeHandler} />
@@ -66,12 +68,14 @@ const Register = (props) => {
 
             <Form.Group className="mb-3" controlId="formGroupBio">
                 <Form.Label>Bio</Form.Label>
-                <Form.Control type="textarea" name="bio" placeholder="Bio" value={bio} onChange={changeHandler} />
+                <Form.Control as="textarea" type="textarea" name="bio" placeholder="Bio" value={bio} onChange={changeHandler} />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
-                Valider
-            </Button>
+            <div id="submit-button">
+                <Button className="post-button" type="submit">
+                    Valider
+                </Button>
+            </div>
         </Form>
     )
 

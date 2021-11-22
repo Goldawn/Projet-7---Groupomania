@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
 
+import "./Comment.css"
+
 
 class Comment extends Component {
 
@@ -56,15 +58,25 @@ class Comment extends Component {
         const comment = this.props.comment ? this.props.comment : this.props.location.state.comment;
         return(
 
-            <div>  
-                <Card key={comment.id} style={{ width: '400px', margin: 'auto' }}>
+            <div>
+                <Card className="comment-container" key={comment.id}>
                     <Card.Body>
+                        <p>{comment.userId}</p>
                         <Card.Title>{comment.title}</Card.Title>
                         <Card.Text>{comment.content}</Card.Text>
-                        <Button variant="success">+</Button>
-                        <Button variant="danger">-</Button>
-                        <Link style={{margin: '10px'}} to={{pathname: "comment/"+String(comment.id)+"/edit", state: {comment: comment} }}>edit</Link>
-                        <Button variant="danger" onClick={() => this.handleClick(comment.id, comment.postId)}>delete</Button>
+
+                        <div className="sub-post">
+                            <div className="left-buttons">
+                                <Button className="post-button">+</Button>
+                                <Button className="post-button">-</Button>
+                            </div> 
+
+                            <div className="right-buttons">
+                                <Link  className="post-button post-link" to={{pathname: "comment/"+String(comment.id)+"/edit", state: {comment: comment} }}>edit</Link>
+                                <Button className="post-button" onClick={() => this.handleClick(comment.id, comment.postId)}>delete</Button>
+                            </div>
+                        </div>
+                        
                     </Card.Body>
                 </Card>
             </div>  

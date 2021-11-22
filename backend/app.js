@@ -7,12 +7,15 @@ const postRoutes = require('./routes/post')
 const likeRoutes = require('./routes/like')
 const commentRoutes = require('./routes/comment')
 const testRoutes = require('./routes/test')
+const path = require('path');
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/user', userRoutes);
 app.use('/api/posts', postRoutes);

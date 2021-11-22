@@ -3,6 +3,7 @@ import { Card, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { Redirect } from 'react-router';
 
+import "./Profile.css"
 
 class Profile extends Component {
 
@@ -98,21 +99,31 @@ class Profile extends Component {
             )
         }
         return  (
-            <div className="App">
-                <Card style={{ width: '400px', margin: '0 auto 60px'}}>
-                    <h1>Profile</h1>
-                    <p className="App-intro">{profileData.username}</p>
-                    <p className="App-intro">{profileData.email}</p>
-                    <p className="App-intro">{profileData.bio}</p>
-                    <Link to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Edit profile</Link>
-                    <Button variant="danger" onClick={() => this.handleClick()}>delete</Button>
+            <div>
+
+                <Card id="profile-card">
+                    <Card.Body>
+                        <Card.Title className="card-title">
+                            {profileData.username}
+                        </Card.Title>
+                        <p className="App-intro">{profileData.email}</p>
+                        <p className="App-intro">{profileData.bio}</p>
+                    </Card.Body>
+
+                    <Card.Body>
+                        <div className="left-buttons">
+                            <Link className="post-button post-link" to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Edit profile</Link>
+                            <Button className="post-button" onClick={() => this.handleClick()}>delete</Button>
+                        </div>
+                    </Card.Body>
+                                        
                 </Card>
 
-                {
+                {/* {
                     profileData.posts.map((item) => { 
                             // debugger
                             return( 
-                            <Card key={item.id} style={{ width: '400px', margin: '20px auto 0'}}>
+                            <Card key={item.id}>
                             <Card.Body>
                                 <Card.Title>{ item.title }{ item.id }</Card.Title>
                             </Card.Body>
@@ -125,7 +136,7 @@ class Profile extends Component {
                             </Card.Body>
                         </Card>
                     )})
-                }
+                } */}
             </div>
         )
     }

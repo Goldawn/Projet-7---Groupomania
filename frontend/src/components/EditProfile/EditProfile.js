@@ -66,7 +66,7 @@ const EditProfile = (props) => {
     const { username, email, bio } = profileData;
 
       return (
-      <Form onSubmit={submitHandler}>
+      <Form id="form" onSubmit={submitHandler}>
 
         <Form.Group className="mb-3" controlId="formGroupText">
           <Form.Label>Username</Form.Label>
@@ -80,12 +80,14 @@ const EditProfile = (props) => {
       
         <Form.Group className="mb-3" controlId="formGroupTextArea">
           <Form.Label>Bio</Form.Label>
-          <Form.Control type="textarea" name='bio' value={bio} placeholder="Entre bio" onChange={changeHandler} />
+          <Form.Control as="textarea" type="textarea" name='bio' value={bio} placeholder="Entre bio" onChange={changeHandler} />
         </Form.Group>
       
-        <Button variant="primary" type="submit">
-          Save Changes
-        </Button>
+        <div id="submit-button">
+          <Button className="post-button" type="submit">
+            Enregistrer les modifications
+          </Button>
+        </div>
 
       </Form>
     )

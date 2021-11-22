@@ -1,0 +1,14 @@
+#all-posts {
+    margin-top: 50px;
+}
+#create-post-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#all-posts .create-post {
+    color: white;
+    display: inline-block;
+    width: 600px;
+    text-align: center;
+}

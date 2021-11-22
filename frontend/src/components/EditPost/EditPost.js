@@ -66,7 +66,7 @@ const EditPost = (props) => {
     const { title, content } = postData
 
       return (
-        <Form onSubmit={submitHandler}>
+        <Form id="form" onSubmit={submitHandler}>
         
           <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Label>Post title</Form.Label>
@@ -78,10 +78,12 @@ const EditPost = (props) => {
               <Form.Control type="textarea" name="content" value={content} placeholder="Post content" onChange={changeHandler} />
           </Form.Group>
 
-          <Button variant="primary" type="submit">
-              Save changes
-          </Button>
-      </Form>
+          <div id="submit-button">
+            <Button className="post-button" type="submit">
+              Enregistrer les modifications
+            </Button>
+          </div>
+        </Form>
     )
 
 }

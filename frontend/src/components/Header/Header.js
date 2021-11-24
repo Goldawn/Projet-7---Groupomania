@@ -1,10 +1,26 @@
+import React, { useState } from 'react';
+
 import './Header.css'
 
-function Header() {
+function Header(props) {
+
+    useState( () => {
+        if(props.isAuthenticated) {
+            console.log('oui')
+        }
+        else {
+            console.log('non')
+        }
+    })
+
+    const disconnect = () => {
+        return localStorage.removeItem('authToken');
+    }
 
     const handleClick = () => {
-
+        disconnect();
     }
+
 
     return (
     
@@ -12,8 +28,8 @@ function Header() {
         <div className="header-container">
             <h1><a href="/">Groupomania</a></h1>
             <div id="header-links">
-                <p><a href="/profile">Profil</a></p>
-                <p><a href="/login">Connexion</a></p>
+                <a href="/profile">Profil</a>
+                <a href="/login">Connexion</a>
                 <button onClick={handleClick} >Déconnexion</button>
             </div>
         </div>

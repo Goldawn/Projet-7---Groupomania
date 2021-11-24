@@ -83,8 +83,8 @@ class Post extends Component {
 
                         <div className="sub-post">
                             <div className="left-buttons">
-                                <Button className="post-button">+</Button>
-                                <Button className="post-button">-</Button>
+                                <Button className="post-button">+ {item.likes}</Button>
+                                <Button className="post-button">- {item.dislikes}</Button>
                                 {!this.props.detail && <Link className="post-button post-link" to={{pathname: "/post/"+String(item.id)+"/", state: {item: item}}}>comment</Link> }
                             </div>                            
                             <div className="right-buttons">

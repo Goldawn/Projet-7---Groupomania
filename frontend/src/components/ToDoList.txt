@@ -1,7 +1,6 @@
 - Ajouter les images pour les Posts / Comments
 - Ajouter les likes/dislikes
 - Ajouter les gestion des roles et autorisations
-- Corriger le problème de param dans la requête backend de création de commentaire.
 - Gérer les suppressions en cascade
 - Gérer les states des composants pour afficher les bons composants et gérer les redirections.
 - Gérer les retours de réponses backend ( filter password, etc.. )

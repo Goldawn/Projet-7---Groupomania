@@ -21,22 +21,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      apiResponse: "",
+      // apiResponse: "",
       isAuthenticated: "",
       auth: ""
    };
   }
-
-  // logout() {
-  //   this.setState({isAuthenticated: false})
-  //   return localStorage.removeItem('authToken');
-
-  // redirection
-  // }
-
-  // handleClick() {
-  //   this.logout();
-  // }
 
   loadData(key) {
     if(localStorage){
@@ -64,18 +53,12 @@ class App extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if(prevState.isAuthenticated !== this.state.isAuthenticated) {
-  //     console.log("change of state")
-  //   }
-  // }
-
   render() {
     const isAuthenticated = this.state.isAuthenticated;
     if(!isAuthenticated) {
       return(
         <div className="App">
-          <h1>Groupomania</h1>
+          <Header isAuthenticated={true} />
           <Router forceRefresh={true}>     
             <Switch>       
               <Route path="/register" component={Register}/>

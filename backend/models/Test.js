@@ -15,12 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       models.Test.belongsTo(models.User, {
         foreignKey: 'userId',
         as: 'user',
-        allowNull: false
+        allowNull: false,
+        onDelete: 'CASCADE'
       });
 
       models.Test.belongsTo(models.Post, {
         foreignKey: 'postId',
-        allowNull: false
+        allowNull: false,
+        onDelete: 'CASCADE'
       });
 
     }

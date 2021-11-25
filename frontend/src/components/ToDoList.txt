@@ -8,3 +8,4 @@
 - Ajouter les variables d'environnement
 - Passer la durée de vie du token à 24h
 - Rédiger le Readme
+-ajouter un lightmode aux couleurs du site.

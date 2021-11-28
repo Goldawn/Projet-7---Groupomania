@@ -1,3 +1,26 @@
 #profile-card .card-title{
-    margin-bottom: 30px;
+    margin-left: 20px;;
+}
+#profile-card .card-title {
+    font-size: 32px;
+}
+#profile-card .card-title p {
+    margin: 5px 0 0 5px;
+    font-size: 15px !important;
+    font-weight: normal;
+}
+#profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+}
+.profile-pic-container img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.profile-buttons {
+    display: flex;
+    justify-content: space-between;
 }

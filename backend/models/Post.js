@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const {Model} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     /**
@@ -15,18 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         as: 'user',
         allowNull: false,
-        onDelete: 'CASCADE',
+        onDelete: 'cascade',
       });
 
       models.Post.hasMany(models.Comment, {
         foreignKey: 'postId',
         as: 'comments',
-        allowNull: false
-      });
-      
-      models.Post.hasMany(models.Test, {
-        foreignKey: 'postId',
-        allowNull: false
+        allowNull: false,
+        onDelete: 'cascade'
       });
     }
   };
@@ -34,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     attachment: DataTypes.STRING,
-    likes: DataTypes.INTEGER
+    likesCounter: DataTypes.INTEGER,
+    dislikesCounter: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Post',

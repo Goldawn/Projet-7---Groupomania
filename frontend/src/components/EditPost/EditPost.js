@@ -9,12 +9,9 @@ const EditPost = (props) => {
     title: props.location.state.item.title,
     content:props.location.state.item.content
   })
+  const [attachment, setAttachment] = useState();
 
   const history = useHistory()
-
-  useEffect(() => {
-    console.log(props.location.state.item)
-  })
 
   const changeHandler = e => {
     setPostData((previousState) => ({
@@ -37,6 +34,11 @@ const EditPost = (props) => {
   const submitHandler = e => {
     e.preventDefault()
     console.log(postData)
+    
+    const data = new FormData();
+    data.append("title", postData.title)
+    data.append("content", postData.content)
+    data.append("file", attachment)
 
     const auth = JSON.parse(loadData("authToken"))
     const bearer = "Bearer "+auth.token
@@ -45,10 +47,9 @@ const EditPost = (props) => {
     fetch(`http://localhost:9000/api/posts/${postId}`, {
       method: 'PUT',
       headers: { 
-          "Content-Type": "application/json",
           "authorization": bearer
-        },
-      body: JSON.stringify(postData)})
+      },
+      body: data })
 
       .then((res) => {
         if(res.status !== 200) {
@@ -65,25 +66,35 @@ const EditPost = (props) => {
 
     const { title, content } = postData
 
-      return (
-        <Form id="form" onSubmit={submitHandler}>
-        
-          <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Label>Post title</Form.Label>
-              <Form.Control type="text" name="title" value={title} placeholder="Post title" onChange={changeHandler} />
-          </Form.Group>
+    return (
 
-          <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Label>post content</Form.Label>
-              <Form.Control type="textarea" name="content" value={content} placeholder="Post content" onChange={changeHandler} />
-          </Form.Group>
+      <Form id="form" onSubmit={submitHandler}>
+      
+        <Form.Group className="mb-3" controlId="formGroupPassword">
+            <Form.Label>Titre</Form.Label>
+            <Form.Control type="text" name="title" value={title} placeholder="Post title" onChange={changeHandler} />
+        </Form.Group>
 
-          <div id="submit-button">
-            <Button className="post-button" type="submit">
-              Enregistrer les modifications
-            </Button>
-          </div>
-        </Form>
+        <Form.Group className="mb-3" controlId="formGroupPassword">
+            <Form.Label>Message</Form.Label>
+            <Form.Control type="textarea" name="content" value={content} placeholder="Post content" onChange={changeHandler} />
+        </Form.Group>
+
+        <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Attacher un fichier</Form.Label>
+            <Form.Control type="file" name="attachment" onChange={ event => {
+                const attachment = event.target.files[0];
+                setAttachment(attachment);
+                console.log(attachment);
+            }}/>
+        </Form.Group>
+
+        <div id="submit-button">
+          <Button className="post-button" type="submit">
+            Enregistrer les modifications
+          </Button>
+        </div>
+      </Form>
     )
 
 }

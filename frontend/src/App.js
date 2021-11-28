@@ -1,33 +1,28 @@
-import { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
+import ContainerRouter from './components/Router/ContainerRouter';
 import Header from './components/Header/Header';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-import Profile from './components/Profile/Profile';
-import EditProfile from './components/EditProfile/EditProfile';
-import PostList from './components/PostList/PostList';
-import CreatePost from './components/CreatePost/CreatePost';
-import CreateComment from './components/CreateComment/CreateComment';
-import EditComment from './components/EditComment/EditComment';
-import {DetailPost} from './components/Post/Post';
-import EditPost from './components/EditPost/EditPost';
 
 import './App.css'
 
+export const ThemeContext = React.createContext();
 
-class App extends Component {
+
+const App = (props) => {
   
-  constructor(props) {
-    super(props);
-    this.state = { 
-      // apiResponse: "",
-      isAuthenticated: "",
-      auth: ""
-   };
-  }
+  const [isAuthenticated, setIsAuthenticated] = useState();
+  const [theme, setTheme] = useState('Light');
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { 
+  //     isAuthenticated: "",
+  //     auth: ""
+  //  };
+  // }
 
-  loadData(key) {
+  // Context = createContext();
+
+  const loadData = (key) => {
     if(localStorage){
         if(key in localStorage) {
             return localStorage.getItem(key);
@@ -37,61 +32,45 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    const auth = this.loadData("authToken")
+  // componentDidMount() {
+  //   const auth = loadData("authToken")
+    
+  //   if(!auth) {
+  //     console.log("non authentifié")
+  //     setIsAuthenticated(false)
+  //   }
+  //   else {
+  //     console.log("authentifié")
+  //     setIsAuthenticated(true)
+  //   }
+  // }
+
+  useEffect( () => {
+    const auth = loadData("authToken")
     
     if(!auth) {
       console.log("non authentifié")
-      this.setState({isAuthenticated: false})
+      setIsAuthenticated(false)
     }
     else {
       console.log("authentifié")
-      this.setState({
-        isAuthenticated: true,
-        auth: auth
-      })
+      setIsAuthenticated(true)
     }
-  }
+  })
+    
+  // const isAuthenticated = props.location.state.isAuthenticated;
 
-  render() {
-    const isAuthenticated = this.state.isAuthenticated;
-    if(!isAuthenticated) {
-      return(
-        <div className="App">
-          <Header isAuthenticated={true} />
-          <Router forceRefresh={true}>     
-            <Switch>       
-              <Route path="/register" component={Register}/>
-              <Route path="/" component={Login}/>
-            </Switch>  
-          </Router>
-        </div>
-      )
-    }
-    else {
-
-      return (
-        <div className="App">
-         <Header/>
-          <Router forceRefresh={true}>
-            <Switch>
-              <Route path="/" exact component={PostList}/>
-              <Route path="/post/:postId/edit" component={EditPost}/>
-              <Route path="/post/new" component={CreatePost}/>
-              <Route path="/post/:postId/comment/:commentId/edit" component={EditComment}/>
-              <Route path="/post/:postId/comment/new" component={CreateComment}/>
-              <Route path="/post/" component={DetailPost}/>
-              <Route path="/login" component={Login}/>
-              <Route path="/register" component={Register}/>
-              <Route path="/profile/edit" component={EditProfile}/>
-              <Route path="/profile" component={Profile}/>
-              <Route path="/" component= {() => <div>Erreur 404</div>}/>
-            </Switch>
-          </Router>
-        </div>
-      )
-    }
-  }
+  return(
+    <ThemeContext.Provider value={{theme, setTheme}}>
+      <div className="App">
+        {/* <Context.Provider value={value}> */}
+          <ContainerRouter isAuthenticated={isAuthenticated}>
+            <Header isAuthenticated={isAuthenticated} />
+          </ContainerRouter>
+        {/* </Context.Provider>; */}
+      </div>
+    </ThemeContext.Provider>
+    )
 }
 
 export default App;

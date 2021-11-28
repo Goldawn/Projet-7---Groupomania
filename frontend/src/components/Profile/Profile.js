@@ -28,7 +28,6 @@ class Profile extends Component {
         })
     
         .then((res) => res.json().then((json) => {
-            console.log(json)
             if(!json) {
                 console.log("token incorrect")
                 this.setState({ redirect: true })
@@ -51,6 +50,7 @@ class Profile extends Component {
             alert("Web Storage is not supported");
         }
     }
+    
 
     componentDidMount() {
 
@@ -79,7 +79,7 @@ class Profile extends Component {
         })
     }
 
-    handleClick() {
+    handleDelete() {
         const auth = JSON.parse(this.loadData("authToken"))
         const bearer = "Bearer "+auth.token
         this.deleteProfile(bearer)
@@ -88,7 +88,9 @@ class Profile extends Component {
     
     render() {
 
-        const { redirect, DataisLoaded, profileData } = this.state;
+        console.log(this.state.profileData)
+
+        const { redirect, DataisLoaded, profileData, postData } = this.state;
 
         if ( redirect ) {
             return <Redirect to='/login'/>;
@@ -101,42 +103,70 @@ class Profile extends Component {
         return  (
             <div>
 
-                <Card id="profile-card">
+                <Card id="profile-card" className="dark">
                     <Card.Body>
-                        <Card.Title className="card-title">
-                            {profileData.username}
-                        </Card.Title>
-                        <p className="App-intro">{profileData.email}</p>
+                        <div id="profile-header">
+                            <div className="profile-pic-container">
+                                <img src="https://cdn.iconscout.com/icon/free/png-256/react-1-282599.png"></img>
+                            </div>
+                            <Card.Title className="card-title">
+                                {profileData.username}
+                                <p className="App-intro">{profileData.email}</p>
+                            </Card.Title>
+                        </div>
+                        
                         <p className="App-intro">{profileData.bio}</p>
                     </Card.Body>
 
                     <Card.Body>
-                        <div className="left-buttons">
-                            <Link className="post-button post-link" to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Edit profile</Link>
-                            <Button className="post-button" onClick={() => this.handleClick()}>delete</Button>
+                        <div className="profile-buttons">
+                            <Link className="post-button post-link" to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Modifier le profil</Link>
+                            <Button className="post-button" onClick={() => this.handleDelete()}>Supprimer le profil</Button>
                         </div>
                     </Card.Body>
                                         
                 </Card>
 
-                {/* {
-                    profileData.posts.map((item) => { 
-                            // debugger
-                            return( 
-                            <Card key={item.id}>
-                            <Card.Body>
-                                <Card.Title>{ item.title }{ item.id }</Card.Title>
-                            </Card.Body>
-                            <Card.Img variant="top" src="" />
-                            <Card.Body>
-                                <Card.Text>
-                                { item.content }
-                                </Card.Text>
-                                <Button variant="primary">Add a comment</Button>
-                            </Card.Body>
-                        </Card>
-                    )})
-                } */}
+                {
+                    this.state.profileData.posts.map((post) => {
+                        return( 
+                            <Card key={post.id} className="dark">
+                                <Card.Body>
+                                    <Card.Title>{ post.title } { post.id }</Card.Title>
+                                </Card.Body>
+                                <Card.Img variant="top" src="" />
+                                <Card.Body>
+                                    <Card.Text>
+                                    { post.content }
+                                    </Card.Text>
+                                    <Button variant="primary">Add a comment</Button>
+                                </Card.Body>
+                            </Card>
+                        )
+                    })
+
+                }
+
+                {
+                    this.state.profileData.comments.map((post) => {
+                        return( 
+                            <Card key={post.id} className="dark">
+                                <Card.Body>
+                                    <Card.Title>{ post.title } { post.id }</Card.Title>
+                                </Card.Body>
+                                <Card.Img variant="top" src="" />
+                                <Card.Body>
+                                    <Card.Text>
+                                    { post.content }
+                                    </Card.Text>
+                                    <Button variant="primary">Add a comment</Button>
+                                </Card.Body>
+                            </Card>
+                        )
+                    })
+
+                }
+
             </div>
         )
     }

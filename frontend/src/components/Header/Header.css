@@ -1,6 +1,6 @@
 header {
-    border-bottom: 1px solid rgb(51, 51, 51);
-    background: black;
+    border-bottom: 1px solid rgb(216, 216, 216);
+    background: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     padding: 15px 0;
@@ -12,7 +12,7 @@ header {
     
 header * {
     margin: 0;
-    color: white;
+    color: black;
 }
 
 .header-container {

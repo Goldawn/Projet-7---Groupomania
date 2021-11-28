@@ -26,29 +26,29 @@ const CreatePost = (props) => {
         const data = new FormData();
         data.append("title", title)
         data.append("content", content)
-        data.append("attachment", attachment)
+        data.append("file", attachment)
         
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
         console.log(bearer)
 
-    fetch('http://localhost:9000/api/posts/new', {
-        method: 'POST',
-        headers: {
-            "authorization": bearer
-        },
-        body: data})
-        .then((res) => {
-            if(res.status !== 200) {
-                console.log(res)
-            }
-            else {
-                res.json().then(data => {
-                  console.log(data)
-                })
-                history.push('/')
-            }
-        })
+        fetch('http://localhost:9000/api/posts/new', {
+            method: 'POST',
+            headers: {
+                "authorization": bearer
+            },
+            body: data})
+            .then((res) => {
+                if(res.status !== 200) {
+                    console.log(res)
+                }
+                else {
+                    res.json().then(data => {
+                    console.log(data)
+                    })
+                    history.push('/')
+                }
+            })
     }
 
     return (

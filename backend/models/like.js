@@ -1,62 +1,49 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Like extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      // define association here
-      models.User.belongsToMany(models.Post, {
-        through: models.Like,
-        foreignKey: 'userId',
-        otherKey: 'postId',
-        onDelete: 'CASCADE'
-      });
-  
-      models.Post.belongsToMany(models.User, {
-        through: models.Like,
-        foreignKey: 'postId',
-        otherKey: 'userId',
-        onDelete: 'CASCADE'
-      });
-  
-      models.Like.belongsTo(models.User, {
-        foreignKey: 'userId',
-        as: 'user',
-        onDelete: 'CASCADE'
-      });
-  
-      models.Like.belongsTo(models.Post, {
-        foreignKey: 'postId',
-        as: 'post',
-        onDelete: 'CASCADE'
-      });
+      models.User.belongsToMany(
+        models.Post,
+        {
+          as: 'fk_userId',
+          through: 'like',
+          foreignKey: 'userId',
+          otherKey: 'postId',
+        }
+      );
+    
+      models.Post.belongsToMany(
+        models.User,
+        {
+          as: 'fk_postId',
+          through: 'like',
+          foreignKey: 'postId',
+          otherKey: 'userId',
+        }
+      );
+
+      console.log("tet",models)
+    
+      models.like.belongsTo(models.Post, { foreignKey: 'postId' });
+      models.like.belongsTo(models.User, { foreignKey: 'userId' });
+      models.User.hasMany(models.like, { foreignKey: 'userId' });
+      models.Post.hasMany(models.like, { foreignKey: 'postId' });
     }
   };
   Like.init({
-    postId: {
-      type:DataTypes.INTEGER,
-      references: {
-        model: 'Post',
-        key: 'id'
-      }
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
-    },
-    isLike: DataTypes.INTEGER
+    isLike: DataTypes.BOOLEAN
   }, {
-    sequelize,
-    modelName: 'Like',
+    modelName: 'like',
+    sequelize
   });
+
+  Like.beforeSync(() =>
+    console.log('before creaing the Like table')
+  );
+  Like.afterSync(() =>
+    console.log('before creaing the Like table')
+  );
   return Like;
 };

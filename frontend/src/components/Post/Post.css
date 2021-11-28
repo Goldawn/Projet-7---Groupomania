@@ -1,8 +1,16 @@
 .card {
-    background: rgb(27, 27, 27);
-    color: white;
+    background: var(--dm-card-bg-color);
+    color: var(--dm-texts-color);
     width: 600px;
     margin: 20px auto 0;
+    box-shadow: 0 0 20px 1px #ebebeb;
+}
+.card.dark {
+    background: var(--dm-card-bg-color);
+    color: var(--dm-texts-color);
+    width: 600px;
+    margin: 20px auto 0;
+    box-shadow: none;
 }
 .image-container {
     width: 100%;
@@ -26,21 +34,30 @@
 }
 .post-button {
     min-width: 50px;
-    background-color: #501c94;
-    border: 1px solid #501c94;
+    background-color: var(--dm-buttons-color);
+    border: 1px solid var(--dm-buttons-color);
 }
 .post-link {
     padding: 7px 12px 8px;
-    background-color: #501c94;
-    border: 1px solid #501c94;
+    background-color: var(--dm-buttons-color);
+    border: 1px solid var(--dm-buttons-color);
     vertical-align: middle;
     border-radius: .25rem;
 }
 .post-link:hover, .post-button:hover {
     color: inherit;
-    background-color: #44197c;
-    border-color: #44197c;
+    background-color: var(--dm-buttons-shadow-color);
+    border-color: var(--dm-buttons-shadow-color);
 }
 .post-card p {
     font-size: 14px;
+}
+.image-container {
+    /* min-height: 500px; */
+    max-height: 600px;
+    max-width: 600px;
+}
+img {
+    max-width: calc(600px - 2*17px );
+    object-fit: contain;
 }

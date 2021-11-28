@@ -32,30 +32,31 @@ const CreateComment = (props) => {
 
     const submitHandler = e => {
         e.preventDefault()
-        console.log(createComment)
-
+        
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
 
-    fetch('http://localhost:9000/api/posts/2/tests/new', {
-        method: 'POST' ,
-        headers: { 
-            "Content-Type": "application/json",
-            "authorization": bearer
-        },
-        body: JSON.stringify(createComment)})
+        const postId = props.location.state.item.id;
 
-        .then((res) => {
-            if(res.status !== 200) {
-                console.log(res)
-            }
-            else {
-                res.json().then(data => {
-                  console.log(data)
-                })
-                history.push('/')
-            }
-        })
+        fetch(`http://localhost:9000/api/posts/${postId}/comments/new`, {
+            method: 'POST' ,
+            headers: { 
+                "Content-Type": "application/json",
+                "authorization": bearer
+            },
+            body: JSON.stringify(createComment)})
+
+            .then((res) => {
+                if(res.status !== 200) {
+                    console.log(res)
+                }
+                else {
+                    res.json().then(data => {
+                    console.log(data)
+                    })
+                    history.push(`/post/${postId}`)
+                }
+            })
     }
 
     const { title, content } = createComment

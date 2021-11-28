@@ -6,7 +6,7 @@ const jwt = require('../middlewares/jwt');
 const DISLIKED = 0;
 const LIKED    = 1;
 
-exports.likePost = (req, res, next) => {
+exports.likePost = async (req, res, next) => {
 
     const headerAuth = req.headers['authorization'];
     const userId = jwt.getUserId(headerAuth);
@@ -16,31 +16,48 @@ exports.likePost = (req, res, next) => {
     if (postId <= 0) {
         return res.status(400).json({ 'error': 'invalid parameters' });
     }
-    console.log('12')
 
     try {
+        const post = await models.Post.findOne({ where: { id: postId } })
+        const user = await models.User.findOne({ where: { id: userId } })
+        // console.log(post, user)
 
-        const post = models.Post.findOne({ where: { id: postId } })
-        const user = models.User.findOne({ where: { id: userId } })
-        const like = models.Like.findOne({ where : { userId: userId, postId: postId } })
+        console.log(models)
 
+ 
+
+
+        try {
+            const like = models.Post.findAll({
+                include: [{
+                    model:models.like, 
+                    through: { where: { userId: userId, postId: postId } }
+                }]
+            })
+        } catch(errs) {
+            console.log(errs)
+        }
+
+        console.log("jioj ",like)
         if (!like) {
             post.addUser(user, { isLike: LIKED })
+            post.update({ likesCounter: post.likesCounter +1})
+                return res.status(200).json('post updated')
         } else {
             if(like.isLike === DISLIKED) {
-            like.update({ isLike: LIKED,})
+            like.update({ isLike: LIKED })
+            post.update({ likesCounter: post.dislikesCounter -1})
+            post.update({ likesCounter: post.likesCounter +1})
+                return res.status(200).json('post updated else')
             }
             else {
                 res.status(409).json({ 'error': 'post already liked' });
             }
-        }   
-
-        post.update({ likes: post.likes +1})
+        }           
     }
 
-    catch {
-        console.log(err)
-        return res.status(500).json({ 'error': 'Something went wrong' });
+    catch(err) {
+        return res.status(500).json({ 'error': err });
     }
     
 }
@@ -59,34 +76,29 @@ exports.dislikePost = (req, res, next) => {
 
     try {
 
+        console.log(postId);
         const post = models.Post.findOne({ where: { id: postId } })
-        console.log( "1" )
         const user = models.User.findOne({ where: { id: userId } })
-        console.log( "1" )
         const like = models.Like.findOne({ where : { userId: userId, postId: postId } })
-        console.log( "1" )
-
         
+        if (!like) {
+            post.addUser(user, { isLike: DISLIKED })
+            post.update({ dislikesCounter: post.dislikesCounter +1})
+        } else {
+            if(like.isLike === LIKED) {
+            like.update({ isLike: DISLIKED })
+            post.update({ Counter: post.dislikesCounter +1})
+            post.update({ likesCounter: post.likesCounter -1})
+            }
+            else {
+                res.status(409).json({ 'error': 'post already liked' });
+            }
+        }   
 
-        return res.json(like)
-        // if (!like) {
-        //     post.addUser(user, { isLike: LIKED })
-        // } else {
-        //     if(like.isLike === DISLIKED) {
-        //     like.update({ isLike: LIKED,})
-        //     }
-        //     else {
-        //         res.status(409).json({ 'error': 'post already liked' });
-        //     }
-        // }   
-
-        // post.update({ likes: post.likes +1})
     }
 
-    catch {
-        console.log(err)
+    catch(err) {
         return res.status(500).json({ 'error': 'Something went wrong' });
     }
-
 }
 

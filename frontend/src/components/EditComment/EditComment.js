@@ -43,7 +43,7 @@ const EditComment = (props) => {
     const postId = props.location.state.comment.postId
     const commentId = props.location.state.comment.id
 
-    fetch(`http://localhost:9000/api/posts/${postId}/tests/${commentId}`, {
+    fetch(`http://localhost:9000/api/posts/${postId}/comments/${commentId}`, {
       method: 'PUT',
       headers: { 
           "Content-Type": "application/json",

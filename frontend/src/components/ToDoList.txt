@@ -1,11 +1,12 @@
-- Ajouter les images pour les Posts / Comments
-- Ajouter les likes/dislikes
-- Ajouter les gestion des roles et autorisations
-- Gérer les suppressions en cascade
-- Gérer les states des composants pour afficher les bons composants et gérer les redirections.
+- Ajouter les likes/dislikes <WIP>
+- Ajouter un lightmode aux couleurs du site. <CONTEXT API>
+
+- Ajouter la gestion d'un image de profil / mettre à jour la table USER 
+- Mettre à jour la création de commentaire / supprimer le titre de la table COMMENT
+
 - Gérer les retours de réponses backend ( filter password, etc.. )
 - Optimiser le code existant et effacer le code inutilisé ( ex: backend/comments, console.log... )
 - Ajouter les variables d'environnement
-- Passer la durée de vie du token à 24h
+- Ajouter les gestion des roles et autorisations
+- Gérer les suppressions en cascade
 - Rédiger le Readme
--ajouter un lightmode aux couleurs du site.

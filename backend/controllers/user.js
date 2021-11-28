@@ -94,17 +94,9 @@ exports.getUserProfile = async (req, res, next) => {
         const user = await models.User.findOne({ 
             attributes: ['id', 'email', 'username', 'bio'],
             where: { id: userId } ,
-            include: ['posts', 'Tests']
+            include: ['posts', 'comments']
         })
-        // const userPosts = user.posts.map(async(post) => {
-        //     const comments = await models.Test.findAll({ where: {id: post.id} })
-        //     console.log(comments)
-        //     const postWithComments = { ...post, tests: comments }
-        //     console.log("BITE")
-        //     console.log(postWithComments)
-        //     return postWithComments
-        // })
-        
+        console.log(user)     
 
         return res.json(user)
         // return res.json(userPosts)

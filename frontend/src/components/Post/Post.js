@@ -1,20 +1,16 @@
-import { Component } from 'react';
+
+// import { Form, Button } from 'react-bootstrap';
 import { Link,Redirect } from "react-router-dom";
-import { Card, Button } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 import Comment from '../Comment/Comment';
 
 import './Post.css'
 
 export const DetailPost = ({ ...props }) => (   <Post detail={true} {...props} /> );
 
-class Post extends Component {
+const Post = (props) => {
 
-    constructor(props) {
-        super(props);
-   
-    }
-
-    loadData = (key) => {
+    const loadData = (key) => {
         if(localStorage){
           if(key in localStorage) {
               return localStorage.getItem(key);
@@ -22,15 +18,9 @@ class Post extends Component {
           } else {
           alert("Web Storage is not supported");
         }
-    }
+    }  
 
-    componentDidMount() {
-        console.log(this.props.item)
-    }
-
-    
-
-    deletePost = (postId, bearer) => {
+    const deletePost = (postId, bearer) => {
         fetch(`http://localhost:9000/api/posts/${postId}`, {
             method: 'DELETE',
             headers: { 
@@ -45,69 +35,73 @@ class Post extends Component {
             else {
             res.json().then(data => {
                 console.log(data)
-                // return <Redirect to='/'/>;
             })
             }
         })
     }
     
 
-    handleClick = (id) => {
-        const auth = JSON.parse(this.loadData("authToken"))
+    const handleClick = (id) => {
+        const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
-        this.deletePost(id, bearer)
+        deletePost(id, bearer)
     }
 
-    render() {
-        const item = this.props.item ? this.props.item : this.props.location.state.item;
-        return(
 
-            <div>
-                <Card className="post-card" key={item.id}>
-                    <Card.Body>
-                        <p>{item.user.username}</p>
-                        <Card.Title>
-                            <Link to={{pathname: "/post/"+String(item.id)+"/", state: {item: item}}}>{item.title }{' '+item.id }</Link>
-                        </Card.Title>
-                    </Card.Body>
-                    <Card.Img variant="top" src="" />
-                    <Card.Body>
+    const item = props.post ? props.post : props.location.state.post;
 
-                        <div className="image-container">
-                        <img src="https://via.placeholder.com/300"></img>
+    return(
+
+        <div>
+            <Card className="post-card dark" key={item.id}>
+                <Card.Body>
+                    <p>{item.user.username}</p>
+                    <Card.Title>
+                        <Link to={{pathname: "/post/"+String(item.id)+"/", state: {post: item}}}>{item.title }{' '+item.id }</Link>
+                    </Card.Title>
+                </Card.Body>
+                <Card.Img variant="top" src="" />
+                <Card.Body>
+
+                    <div className="image-container">
+                        <img src={item.attachment}></img>
+                    </div>
+                    
+                    <Card.Text className="card-content">
+                        { item.content }
+                    </Card.Text>
+
+                    <div className="sub-post">
+                        <div className="left-buttons">
+                            <Button className="post-button">+ {item.likes}</Button>
+                            <Button className="post-button">- {item.dislikes}</Button>
+                            {!props.detail && <Link className="post-button post-link" to={{pathname: "/post/#top-comment"+String(item.id)+"/", state: {item: item.id}}}>comment</Link> }
                         </div>
-                        
-                        <Card.Text className="card-content">
-                            { item.content }
-                        </Card.Text>
-
-                        <div className="sub-post">
-                            <div className="left-buttons">
-                                <Button className="post-button">+ {item.likes}</Button>
-                                <Button className="post-button">- {item.dislikes}</Button>
-                                {!this.props.detail && <Link className="post-button post-link" to={{pathname: "/post/"+String(item.id)+"/", state: {item: item}}}>comment</Link> }
-                            </div>                            
-                            <div className="right-buttons">
-                                {this.props.detail && <Link style={{margin: '10px'}} to={{pathname: "comment/new", state: {item: item}}}>write a comment</Link> }
-                                <Link className="post-button post-link" to={{pathname: "/post/"+String(item.id)+"/edit", state: {item: item} }}>edit</Link>
-                                <Button className="post-button" id={item.id} onClick={() => this.handleClick(item.id)}>delete</Button>
-                            </div>
+                        <div className="right-buttons">
+                            {props.detail && <Link style={{margin: '10px'}} to={{pathname: "comments/new", state: {item: item}}}>write a comment</Link> }
+                            <Link className="post-button post-link" to={{pathname: "/post/"+String(item.id)+"/edit", state: {item: item} }}>edit</Link>
+                            <Button className="post-button" id={item.id} onClick={() => handleClick(item.id)}>delete</Button>
                         </div>
-                        
-                    </Card.Body>
-                </Card>
-                
-                
-                {item.Tests.map( (comment) => {
+                    </div>
+                    
+                </Card.Body>
+            </Card>
+            
+            {props.detail && <>
+
+                {item.comments.map( (comment, id) => {
                     console.log(comment)
-                    return(
-                        this.props.detail && <Comment comment={comment}/>
+                    return(                
+                        <Comment key={id} comment={comment}/>                    
                     )
                 })}
-            </div>
-            
-         )
-    }
+
+            </>}
+
+        </div>
+        
+        )
+
 }
 
 export default Post;

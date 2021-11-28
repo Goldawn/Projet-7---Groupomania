@@ -1,20 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
+import { useContext } from 'react';
+import { ThemeContext } from '../../App'
 
 import './Header.css'
 
-function Header(props) {
+const Header = (props) => {
 
-    useState( () => {
-        if(props.isAuthenticated) {
-            console.log('oui')
-        }
-        else {
-            console.log('non')
-        }
-    })
+    const { theme } = useContext(ThemeContext);
+
+    const history = useHistory();
+    
+    useEffect( () => {
+        console.log("in header",props.isAuthenticated)
+    }, [props.isAuthenticated])
+
+    const renderAuthenticated = () => {
+        if (props.isAuthenticated) {
+            return (
+                <>
+                <a href="/profile">Profil</a>
+                <button onClick={handleClick} >Déconnexion</button>
+                <ThemeToggle/>
+                </>
+            )
+        } else {
+            return (
+                <>
+                <a href="/login">Connexion</a>
+                </>
+            )
+        } 
+    }
 
     const disconnect = () => {
-        return localStorage.removeItem('authToken');
+        localStorage.removeItem('authToken');
+        console.log(history)
+        history.push('/')
     }
 
     const handleClick = () => {
@@ -26,11 +49,9 @@ function Header(props) {
     
     <header>
         <div className="header-container">
-            <h1><a href="/">Groupomania</a></h1>
+            <h1><a href="/">Groupomania [{theme}]</a></h1>
             <div id="header-links">
-                <a href="/profile">Profil</a>
-                <a href="/login">Connexion</a>
-                <button onClick={handleClick} >Déconnexion</button>
+                {renderAuthenticated()}
             </div>
         </div>
     </header>

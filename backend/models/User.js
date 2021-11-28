@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,18 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       models.User.hasMany(models.Post, {
         foreignKey: 'userId',
         as: 'posts',
-        allowNull: false
+        allowNull: false,
+        onDelete: 'cascade'
       });
       models.User.hasMany(models.Comment, {
         foreignKey: 'userId',
         as: 'comments',
-        allowNull: false
+        allowNull: false,
+        onDelete: 'cascade'
       });
-
-      models.User.hasMany(models.Test, {
-        foreignKey: 'userId',
-        allowNull: false
-      })
     }
   };
   User.init({

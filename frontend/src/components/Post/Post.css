@@ -61,3 +61,11 @@ img {
     max-width: calc(600px - 2*17px );
     object-fit: contain;
 }
+.profile-pic-container.medium-pic img {
+    width: 40px;
+    margin-right: 20px;
+}
+#all-posts #profile-header .h5 {
+    font-size: 1em;
+    font-weight: 400;;
+}

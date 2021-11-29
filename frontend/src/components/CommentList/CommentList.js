@@ -34,7 +34,9 @@ const CommentList = (props) => {
 
     useEffect(() => {
 
-        const postId = 1;
+
+
+        const postId = 10;
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
 
@@ -48,11 +50,6 @@ const CommentList = (props) => {
         .then((res) => res.json())
         .then((json) => setPostData(json))
     }, [])
-
-    useEffect(() => {
-        console.log(postData)
-        console.log(props)
-    },[postData])
 
     const loadData = (key) => {
         if(localStorage){
@@ -99,6 +96,8 @@ const CommentList = (props) => {
                 }
             })
     }
+    
+    console.log((Number(props.location.pathname.slice(6))))
 
     const post = props.location.state.post ? props.location.state.post : postData;
 

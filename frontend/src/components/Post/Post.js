@@ -51,14 +51,87 @@ const Post = (props) => {
     }
 
 
+    console.log('test')
+    console.log(props.post)
+    console.log('test')
+    // console.log(props.location.state.post)
+
     const item = props.post ? props.post : props.location.state.post;
+    // const item = props.post ? props.post : myObject;
+
+    // const myObject = {
+    //     "id": 10,
+    //     "title": "test",
+    //     "content": "test",
+    //     "attachment": "http://localhost:9000/images/Gal-Gadot-photoshoot-IEIQRZ-768x1152.jpg1638219941685.jpeg",
+    //     "likesCounter": 0,
+    //     "dislikesCounter": 0,
+    //     "createdAt": "2021-11-29T13:33:04.000Z",
+    //     "updatedAt": "2021-11-29T21:05:41.000Z",
+    //     "userId": 7,
+    //     "user": {
+    //         "id": 7,
+    //         "email": "test@test.com",
+    //         "username": "Goldawn",
+    //         "password": "$2b$05$Dr4XkDuLtWbQWmGU03z32em7OND63tOci8W.hzQODnOWQ0uE1WLuq",
+    //         "attachment": "http://localhost:9000/images/245713586_560506835057582_1810524064439026955_n.jpg1638222408104.jpeg",
+    //         "bio": "test",
+    //         "isAdmin": false,
+    //         "createdAt": "2021-11-29T13:25:13.000Z",
+    //         "updatedAt": "2021-11-29T21:46:48.000Z"
+    //     },
+    //     "comments": [
+    //         {
+    //             "id": 5,
+    //             "content": "test de commentaire",
+    //             "attachment": null,
+    //             "likesCounter": 0,
+    //             "dislikesCounter": 0,
+    //             "createdAt": "2021-11-29T20:16:59.000Z",
+    //             "updatedAt": "2021-11-29T20:17:14.000Z",
+    //             "userId": 7,
+    //             "postId": 10
+    //         },
+    //         {
+    //             "id": 6,
+    //             "content": "autre",
+    //             "attachment": null,
+    //             "likesCounter": 0,
+    //             "dislikesCounter": 0,
+    //             "createdAt": "2021-11-29T20:27:10.000Z",
+    //             "updatedAt": "2021-11-29T20:27:10.000Z",
+    //             "userId": 7,
+    //             "postId": 10
+    //         },
+    //         {
+    //             "id": 7,
+    //             "content": "encore",
+    //             "attachment": null,
+    //             "likesCounter": 0,
+    //             "dislikesCounter": 0,
+    //             "createdAt": "2021-11-29T20:27:15.000Z",
+    //             "updatedAt": "2021-11-29T20:27:15.000Z",
+    //             "userId": 7,
+    //             "postId": 10
+    //         }
+    //     ]
+    // }
+
+
 
     return(
 
         <div>
             <Card className="post-card dark" key={item.id}>
                 <Card.Body>
-                    <p>{item.user.username}</p>
+                    <div id="profile-header">
+                        <div className="profile-pic-container medium-pic">
+                            <img src={item.user.attachment}></img>
+                        </div>
+                        <Card.Title>
+                            {item.user.username}
+                        </Card.Title>
+                    </div>
                     <Card.Title>
                         <Link to={{pathname: "/post/"+String(item.id)+"/", state: {post: item}}}>{item.title }{' '+item.id }</Link>
                     </Card.Title>
@@ -91,10 +164,10 @@ const Post = (props) => {
             
             {props.detail && <>
 
-                {item.comments.map( (comment, id) => {
+                {item.comments.map( (comment) => {
                     console.log(comment)
                     return(                
-                        <Comment key={id} comment={comment}/>
+                        <Comment key={comment.id} comment={comment}/>
                     )
                 })}
 

@@ -33,7 +33,7 @@ const PostList = (props) => {
             <Card  className="dark">
                 <Card.Body>
                 
-                <div class='text-center'>
+                <div className='text-center'>
                     <Card.Text>Il 'ny a aucune publication à afficher</Card.Text>
                     <Card.Text>Soyez le premier à partager !</Card.Text>
                 </div>

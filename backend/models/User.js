@@ -8,17 +8,25 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+
       models.User.hasMany(models.Post, {
         foreignKey: 'userId',
         as: 'posts',
         allowNull: false,
         onDelete: 'cascade'
       });
+
       models.User.hasMany(models.Comment, {
         foreignKey: 'userId',
         as: 'comments',
         allowNull: false,
         onDelete: 'cascade'
+      });
+
+      models.User.belongsToMany(models.Post, {
+        through: 'like',
+        as: "userLikedPosts",
+        foreignKey: 'userId',
       });
     }
   };
@@ -26,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
+    attachment: DataTypes.STRING,
     bio: DataTypes.STRING,
     isAdmin: DataTypes.BOOLEAN
   }, {

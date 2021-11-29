@@ -33,7 +33,6 @@ const EditPost = (props) => {
 
   const submitHandler = e => {
     e.preventDefault()
-    console.log(postData)
     
     const data = new FormData();
     data.append("title", postData.title)

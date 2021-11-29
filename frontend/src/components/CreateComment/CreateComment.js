@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 const CreateComment = (props) => {
 
     const [createComment, setCreateComment] = useState({
-        title: "",
         content:""
     })
 

@@ -1,14 +1,16 @@
 
-// import { Form, Button } from 'react-bootstrap';
-import { Link,Redirect } from "react-router-dom";
-import { Card, Form, Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { Card, Button } from 'react-bootstrap';
 import Comment from '../Comment/Comment';
+import { useHistory } from 'react-router-dom';
 
 import './Post.css'
 
 export const DetailPost = ({ ...props }) => (   <Post detail={true} {...props} /> );
 
 const Post = (props) => {
+
+    const history = useHistory()
 
     const loadData = (key) => {
         if(localStorage){
@@ -35,13 +37,14 @@ const Post = (props) => {
             else {
             res.json().then(data => {
                 console.log(data)
+                history.push('/')
             })
             }
         })
     }
     
 
-    const handleClick = (id) => {
+    const handleDelete = (id) => {
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
         deletePost(id, bearer)
@@ -75,12 +78,11 @@ const Post = (props) => {
                         <div className="left-buttons">
                             <Button className="post-button">+ {item.likes}</Button>
                             <Button className="post-button">- {item.dislikes}</Button>
-                            {!props.detail && <Link className="post-button post-link" to={{pathname: "/post/#top-comment"+String(item.id)+"/", state: {item: item.id}}}>comment</Link> }
+                            {!props.detail && <Link className="post-button post-link" to={{pathname: "/post/"+String(item.id)+"/", state: {post: item}}}>comment</Link> }
                         </div>
                         <div className="right-buttons">
-                            {props.detail && <Link style={{margin: '10px'}} to={{pathname: "comments/new", state: {item: item}}}>write a comment</Link> }
                             <Link className="post-button post-link" to={{pathname: "/post/"+String(item.id)+"/edit", state: {item: item} }}>edit</Link>
-                            <Button className="post-button" id={item.id} onClick={() => handleClick(item.id)}>delete</Button>
+                            <Button className="post-button" id={item.id} onClick={() => handleDelete(item.id)}>delete</Button>
                         </div>
                     </div>
                     
@@ -92,7 +94,7 @@ const Post = (props) => {
                 {item.comments.map( (comment, id) => {
                     console.log(comment)
                     return(                
-                        <Comment key={id} comment={comment}/>                    
+                        <Comment key={id} comment={comment}/>
                     )
                 })}
 

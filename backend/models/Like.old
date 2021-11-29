@@ -18,16 +18,18 @@ module.exports = (sequelize, DataTypes) => {
         models.User,
         {
           as: 'fk_postId',
-          through: 'like',
+          through: 'test',
           foreignKey: 'postId',
           otherKey: 'userId',
         }
       );
+
+      console.log("tet",models)
     
-      Like.belongsTo(models.Post, { foreignKey: 'postId' });
-      Like.belongsTo(models.User, { foreignKey: 'userId' });
-      models.User.hasMany(Like, { foreignKey: 'userId' });
-      models.Post.hasMany(Like, { foreignKey: 'postId' });
+      // models.like.belongsTo(models.Post, { foreignKey: 'postId' });
+      // models.like.belongsTo(models.User, { foreignKey: 'userId' });
+      // models.User.hasMany(models.like, { foreignKey: 'userId' });
+      // models.Post.hasMany(models.like, { foreignKey: 'postId' });
     }
   };
   Like.init({

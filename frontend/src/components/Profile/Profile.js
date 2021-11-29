@@ -1,23 +1,41 @@
-import { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { Link } from "react-router-dom";
-import { Redirect } from 'react-router';
+import { Link, useHistory } from "react-router-dom";
 
 import "./Profile.css"
 
-class Profile extends Component {
+// class Profile extends Component {
+const Profile = (props) => {
 
-    constructor(props) {
-        super(props);
+    // const [ state , setState ] = useState({});
+    const [ profileData , setProfileData ] = useState({});
+    const [ dataIsLoaded , setDataIsLoaded ] = useState({});
 
-        this.state = {
-            redirect: false,
-            profileData: {},
-            DataisLoaded: false
-        };
-    }
+    const history = useHistory()
 
-    getData(bearer) {
+    // constructor(props) {
+    //     super(props);
+
+    //     this.state = {
+    //         redirect: false,
+    //         profileData: {},
+    //         DataisLoaded: false
+    //     };
+    // }
+
+    useEffect(() => {
+        const auth = JSON.parse(loadData("authToken"))
+        const bearer = "Bearer "+auth.token
+        getData(bearer);
+    }, [])
+
+    useEffect(() => {
+        console.log(profileData)
+        setDataIsLoaded(true)
+    }, [profileData])
+
+
+    const getData = (bearer) => {
 
         fetch('http://localhost:9000/api/user/profile', {
           method: 'GET',
@@ -30,18 +48,16 @@ class Profile extends Component {
         .then((res) => res.json().then((json) => {
             if(!json) {
                 console.log("token incorrect")
-                this.setState({ redirect: true })
+                history.push('/login')
             }
             else {                
-                this.setState({
-                    profileData: json,
-                    DataisLoaded: true
-                });
-            }      
+                setProfileData(json)
+                // setDataIsLoaded(true)
+            }
         }))
     }
 
-    loadData(key) {
+    const loadData = (key) => {
         if(localStorage){
             if(key in localStorage) {
                 return localStorage.getItem(key);
@@ -50,16 +66,8 @@ class Profile extends Component {
             alert("Web Storage is not supported");
         }
     }
-    
 
-    componentDidMount() {
-
-        const auth = JSON.parse(this.loadData("authToken"))
-        const bearer = "Bearer "+auth.token
-        this.getData(bearer);
-    }
-
-    deleteProfile = (bearer) => {
+    const deleteProfile = (bearer) => {
         fetch(`http://localhost:9000/api/user/profile`, {
             method: 'DELETE',
             headers: { 
@@ -74,102 +82,103 @@ class Profile extends Component {
             else {
             res.json().then(data => {
                 console.log(data)
+                history.push('/register')
             })
             }
         })
     }
 
-    handleDelete() {
-        const auth = JSON.parse(this.loadData("authToken"))
+    const handleDelete = () => {
+        const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
-        this.deleteProfile(bearer)
+        deleteProfile(bearer)
     }
 
-    
-    render() {
-
-        console.log(this.state.profileData)
-
-        const { redirect, DataisLoaded, profileData, postData } = this.state;
-
-        if ( redirect ) {
-            return <Redirect to='/login'/>;
+    const getProfileData = (profilePic) => {
+        if (profilePic === "") {
+            profilePic = "https://jeunes.sfpnet.fr/wp-content/uploads/2017/02/avatar-placeholder.png";
         }
-        else if (!DataisLoaded) {
-            return (
-            <div className="App">No data</div>
-            )
-        }
-        return  (
-            <div>
+        return profilePic;
+    }
 
-                <Card id="profile-card" className="dark">
-                    <Card.Body>
-                        <div id="profile-header">
-                            <div className="profile-pic-container">
-                                <img src="https://cdn.iconscout.com/icon/free/png-256/react-1-282599.png"></img>
-                            </div>
-                            <Card.Title className="card-title">
-                                {profileData.username}
-                                <p className="App-intro">{profileData.email}</p>
-                            </Card.Title>
-                        </div>
-                        
-                        <p className="App-intro">{profileData.bio}</p>
-                    </Card.Body>
+    // const { redirect, DataisLoaded, profileData } = state;
+    const profilePic = getProfileData(profileData.attachment);        
 
-                    <Card.Body>
-                        <div className="profile-buttons">
-                            <Link className="post-button post-link" to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Modifier le profil</Link>
-                            <Button className="post-button" onClick={() => this.handleDelete()}>Supprimer le profil</Button>
-                        </div>
-                    </Card.Body>
-                                        
-                </Card>
-
-                {
-                    this.state.profileData.posts.map((post) => {
-                        return( 
-                            <Card key={post.id} className="dark">
-                                <Card.Body>
-                                    <Card.Title>{ post.title } { post.id }</Card.Title>
-                                </Card.Body>
-                                <Card.Img variant="top" src="" />
-                                <Card.Body>
-                                    <Card.Text>
-                                    { post.content }
-                                    </Card.Text>
-                                    <Button variant="primary">Add a comment</Button>
-                                </Card.Body>
-                            </Card>
-                        )
-                    })
-
-                }
-
-                {
-                    this.state.profileData.comments.map((post) => {
-                        return( 
-                            <Card key={post.id} className="dark">
-                                <Card.Body>
-                                    <Card.Title>{ post.title } { post.id }</Card.Title>
-                                </Card.Body>
-                                <Card.Img variant="top" src="" />
-                                <Card.Body>
-                                    <Card.Text>
-                                    { post.content }
-                                    </Card.Text>
-                                    <Button variant="primary">Add a comment</Button>
-                                </Card.Body>
-                            </Card>
-                        )
-                    })
-
-                }
-
-            </div>
+    if (!dataIsLoaded) {
+        return (
+        <div className="App">No data</div>
         )
     }
+
+    return  (
+        
+        <div>
+
+            <Card id="profile-card" className="dark">
+                <Card.Body>
+                    <div id="profile-header">
+                        <div className="profile-pic-container">
+                            <img src={profilePic}></img>
+                        </div>
+                        <Card.Title className="card-title">
+                            {profileData.username}
+                            <p className="App-intro">{profileData.email}</p>
+                        </Card.Title>
+                    </div>
+                    
+                    <p className="App-intro">{profileData.bio}</p>
+                </Card.Body>
+
+                <Card.Body>
+                    <div className="profile-buttons">
+                        <Link className="post-button post-link" to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Modifier le profil</Link>
+                        <Button className="post-button" onClick={() => handleDelete()}>Supprimer le profil</Button>
+                    </div>
+                </Card.Body>
+                                    
+            </Card>
+
+            {/* {
+                profileData.posts.map((post) => {
+                    return( 
+                        <Card key={post.id} className="dark">
+                            <Card.Body>
+                                <Card.Title>{ post.title } { post.id }</Card.Title>
+                            </Card.Body>
+                            <Card.Body>
+                                <Card.Text>
+                                { post.content }
+                                </Card.Text>
+                                <Button variant="primary">Add a comment</Button>
+                            </Card.Body>
+                        </Card>
+                    )
+                })
+
+            }
+
+            {
+                profileData.comments.map((post) => {
+                    return( 
+                        <Card key={post.id} className="dark">
+                            <Card.Body>
+                                <Card.Title>{ post.title } { post.id }</Card.Title>
+                            </Card.Body>
+                            <Card.Body>
+                                <Card.Text>
+                                { post.content }
+                                </Card.Text>
+                                <Button variant="primary">Add a comment</Button>
+                            </Card.Body>
+                        </Card>
+                    )
+                })
+
+            } */}
+
+        </div>
+    )
+
 }
   
 export default Profile;

@@ -8,24 +8,6 @@ import "./Comment.css"
 const Comment = (props) => {
 
     const history = useHistory()
-    // useEffect(() => {
-
-    //     const postId = 1;
-    //     // const postId = props.comment.postId;
-    //     const auth = JSON.parse(loadData("authToken"))
-    //     const bearer = "Bearer "+auth.token
-
-    //     fetch(`http://localhost:9000/api/posts/${postId}/comments/`, {
-    //         method: 'GET',
-    //         headers: { 
-    //             "Content-Type": "application/json",
-    //             "authorization": bearer
-    //         }
-    //     })
-    //     .then((res) => res.json())
-    //     .then((json) => setCommentData(json))
-    //     console.log(commentData)
-    // },[])
 
     const loadData = (key) => {
         if(localStorage){
@@ -52,14 +34,13 @@ const Comment = (props) => {
             else {
             res.json().then(data => {
                 console.log(data)
-            history.push(`/post/${postId}`)
+            history.push(`/`)
             })
             }
         })
     }
     
-
-    const handleClick = (commentId, postId) => {
+    const handleDelete = (commentId, postId) => {
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
         deleteComment(postId, commentId, bearer)
@@ -71,9 +52,19 @@ const Comment = (props) => {
         <div>
             <Card className="comment-container dark" key={props.comment.id}>
                 <Card.Body>
-                    <p>{props.comment.user.username}</p>
-                    <Card.Title>{props.comment.title}</Card.Title>
+
+                    <div id="profile-header">
+                        <div className="profile-pic-container small-pic">
+                            <img src={props.comment.user.attachment}></img>
+                        </div>
+                        <Card.Title className="card-title">
+                            {props.comment.user.username}
+                        </Card.Title>
+                    </div>
+
                     <Card.Text>{props.comment.content}</Card.Text>
+
+                    
 
                     <div className="sub-post">
                         <div className="left-buttons">
@@ -83,7 +74,7 @@ const Comment = (props) => {
 
                         <div className="right-buttons">
                             <Link  className="post-button post-link" to={{pathname: "comment/"+String(comment.id)+"/edit", state: {comment: comment} }}>edit</Link>
-                            <Button className="post-button" onClick={() => handleClick(comment.id, comment.postId)}>delete</Button>
+                            <Button className="post-button" onClick={() => handleDelete(comment.id, comment.postId)}>delete</Button>
                         </div>
                     </div> 
                     

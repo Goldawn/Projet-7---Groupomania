@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 const EditComment = (props) => { 
 
   const [commentData, setCommentData] = useState({
-    title: props.location.state.comment.title,
     content:props.location.state.comment.content
   })
 
@@ -69,11 +68,6 @@ const EditComment = (props) => {
       return (
         <Form id="form" onSubmit={submitHandler}>
         
-          <Form.Group className="mb-3" controlId="formGroupPassword">
-              <Form.Label>Post title</Form.Label>
-              <Form.Control type="text" name="title" value={title} placeholder="Post title" onChange={changeHandler} />
-          </Form.Group>
-
           <Form.Group className="mb-3" controlId="formGroupPassword">
               <Form.Label>post content</Form.Label>
               <Form.Control as="textarea" type="textarea" name="content" value={content} placeholder="Post content" onChange={changeHandler} />

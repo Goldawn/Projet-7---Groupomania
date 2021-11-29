@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import { Card, Form, Button } from 'react-bootstrap';
 import Comment from '../Comment/Comment'
 import Post from '../Post/Post'
 
+import './CommentList.css'
+
 const CommentList = (props) => {
+
+    const history = useHistory();
 
     const [ commentData, setCommentData ]= useState([]);
     const [ postData, setPostData ]= useState([]);
@@ -60,6 +65,7 @@ const CommentList = (props) => {
     }
 
     const changeHandler = e => {
+        console.log(e.target.value)
         setComment(e.target.value)
     }
 
@@ -68,8 +74,9 @@ const CommentList = (props) => {
         
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
+        const body = { content: comment }
 
-        const postId = 1
+        const postId = props.location.state.post.id;
 
         fetch(`http://localhost:9000/api/posts/${postId}/comments/new`, {
             method: 'POST' ,
@@ -77,7 +84,7 @@ const CommentList = (props) => {
                 "Content-Type": "application/json",
                 "authorization": bearer
             },
-            body: JSON.stringify(comment)})
+            body: JSON.stringify(body)})
 
             .then((res) => {
                 if(res.status !== 200) {
@@ -87,6 +94,7 @@ const CommentList = (props) => {
                     res.json().then(data => {
                     console.log(data)
                     })
+                    history.push(`/`)
                     // history.push(`/post/${postId}`)
                 }
             })
@@ -99,16 +107,16 @@ const CommentList = (props) => {
         <Post post={post}/>
 
         <Form id="form" onSubmit={submitHandler}>
-            <Card id="top-comment"className="dark">
+            <Card id="top-comment"className="dark card-body">
                 <Form.Group className="mb-3" controlId="formGroupPassword">
                     <Form.Label>{commentData.length} Commentaire(s)</Form.Label>
                     <Form.Control as="textarea" type="textarea" name="content" placeholder="Rédiger un commentaire" onChange={changeHandler}/>
                 </Form.Group>
 
                 <div id="submit-button">
-                <Button className="post-button" type="submit">
-                    Envoyer le commentaire
-                </Button>
+                    <Button className="post-button" type="submit">
+                        Envoyer le commentaire
+                    </Button>
                 </div>
 
             </Card>
@@ -120,9 +128,9 @@ const CommentList = (props) => {
             {
                 commentData && commentData.map((comment, id) => {
                     return(
-                        <div>
+                        <>
                             <Comment key={id} comment={comment}/>
-                        </div>
+                        </>
                     )
                 })
             }

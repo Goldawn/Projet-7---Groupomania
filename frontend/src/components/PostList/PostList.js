@@ -1,7 +1,6 @@
-import { Component } from 'react';
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import Post from '../Post/Post';
 
 import "./PostList.css"
@@ -29,11 +28,22 @@ const PostList = (props) => {
 
     return (
         <div id="all-posts">
+            
+            { !postsExists && 
+            <Card  className="dark">
+                <Card.Body>
+                
+                <div class='text-center'>
+                    <Card.Text>Il 'ny a aucune publication à afficher</Card.Text>
+                    <Card.Text>Soyez le premier à partager !</Card.Text>
+                </div>
+                </Card.Body>  
+            </Card>}
 
             <div id="create-post-container">
-                <Link className="post-link create-post" to={{pathname: "/post/new" }}>Créer un post</Link>
+                    <Link className="post-link create-post" to={{pathname: "/post/new" }}>Créer un post</Link>
             </div>
-            
+
             {
                 posts.map((post, id) => {
                     return(
@@ -41,9 +51,6 @@ const PostList = (props) => {
                         <div>
                             <Post key={id} post={post}/>
                         </div>
-                        { !postsExists && <div classNae="card-body dark">
-                            <p>Soyez le premier à partager !</p>
-                        </div>}
                         </>
                     )
                 })

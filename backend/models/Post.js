@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         onDelete: 'cascade'
       });
+
+      models.Post.belongsToMany(models.User, {
+        through: 'like',
+        as: 'usersLikedPost',
+        foreignKey: 'postId',
+      });
     }
   };
   Post.init({

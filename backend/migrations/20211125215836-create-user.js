@@ -20,6 +20,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      attachment: {
+        type: Sequelize.STRING
+      },
       bio: {
         allowNull: true,
         type: Sequelize.STRING

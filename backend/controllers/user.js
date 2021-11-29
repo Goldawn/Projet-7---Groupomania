@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('../middlewares/jwt');
 const models = require('../models');
+const fs = require('fs');
 
 exports.signup = (req, res, next) => {
 
@@ -8,6 +9,7 @@ exports.signup = (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     let bio = req.body.bio;
+    let attachment = ''
     
     if (email == null || username == null || password == null) {
         return res.status(400).json({ 'error': 'missing parameters' });
@@ -26,6 +28,7 @@ exports.signup = (req, res, next) => {
                     username: username,
                     password: bcryptedPassword,
                     bio: bio,
+                    attachment: attachment,
                     isAdmin: 0
                 })
                 .then(function(newUser) {
@@ -33,8 +36,8 @@ exports.signup = (req, res, next) => {
                         'userId': newUser.id
                     })
                 })
-                .catch(function(err) {
-                    return res.status(500).json({ 'error': 'cannot add user' });
+                .catch((err) => {
+                    return res.status(500).json({ 'error': err });
                 });
             });
         }
@@ -43,8 +46,8 @@ exports.signup = (req, res, next) => {
             return res-status(409).json({ 'error': 'user already exists' });
         }
     })
-    .catch(function(err) {
-        return res.status(500).json({ 'error': 'unable to verify user' });
+    .catch((err) => {
+        return res.status(500).json({ 'error': err });
     });
 
 };
@@ -92,7 +95,7 @@ exports.getUserProfile = async (req, res, next) => {
 
     try {
         const user = await models.User.findOne({ 
-            attributes: ['id', 'email', 'username', 'bio'],
+            attributes: ['id', 'email', 'username', 'bio', 'attachment'],
             where: { id: userId } ,
             include: ['posts', 'comments']
         })
@@ -114,36 +117,78 @@ exports.updateUserProfile = async (req, res, next) => {
     const email = req.body.email;
     const username = req.body.username;
     const bio = req.body.bio;
+    const attachment =  req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null ;
 
-    try {
-        const user = await models.User.findOne({ where: { id: userId } })
+    if(attachment) {
+        try {
+            const user = await models.User.findOne({ where: { id: userId } })
+            
+            const filename = user.attachment.split('/images/')[1];
 
-        user.username = username
-        user.email = email
-        user.bio = bio
+            if(user.attachment) {
+                fs.unlink(`images/${filename}`, () => {
+                    user.username = username
+                    user.email = email
+                    user.bio = bio
+                    user.attachment = attachment
+                    user.save()
+                })
+                return res.json(user)
 
-        await user.save()
+            } else {
+                user.username = username
+                user.email = email
+                user.bio = bio
+                user.attachment = attachment
+                await user.save()
 
-        return res.json(user)
-    }
-    catch (err) {
-        console.log(err)
-        return res.status(500).json({ 'error': 'Something went wrong' });
+                return res.json(user)
+            }
+
+
+
+        }
+        catch (err) {
+            console.log(err)
+            return res.status(500).json({ 'error': 'Something went wrong' });
+        }
+    } else {
+        try {
+            const user = await models.User.findOne({ where: { id: userId } })
+    
+                user.username = username
+                user.email = email
+                user.bio = bio
+    
+                await user.save()
+    
+            return res.json(user)
+        }
+        catch(err) {
+            console.log(err)
+            return res.status(500).json({ 'error': 'Something went wrong' });
+        }
     }
 }
 
-exports.deleteUserProfile = (req, res, next) => {
+exports.deleteUserProfile = async (req, res, next) => {
 
     const headerAuth = req.headers['authorization'];
     const userId = jwt.getUserId(headerAuth)
 
-    if (userId < 0)
-        return res.status(400).json({ 'error' : 'wrong token' });
+    try {
+        const user = await models.User.findOne({ where: { id: userId } })
 
-    models.User.findOne({
-        where: { id: userId }
-    })
-    .then(user => user.destroy())
-    .then(user => res.status(200).json({ message : 'user deleted' }))
-    .catch( error => res.status(404).json({ error}));
+        const filename = user.attachment.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+            user.destroy()
+        })
+        res.status(200).json({ message : 'user deleted' })
+    }
+
+    catch(err) {
+        console.log(err)
+        return res.status(500).json({ err });
+    }
+
 };

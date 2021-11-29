@@ -30,7 +30,6 @@ const CreatePost = (props) => {
         
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
-        console.log(bearer)
 
         fetch('http://localhost:9000/api/posts/new', {
             method: 'POST',

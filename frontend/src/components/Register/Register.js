@@ -28,22 +28,22 @@ const Register = (props) => {
         e.preventDefault()
         // console.log(createPost)
 
-    fetch('http://localhost:9000/api/user/signup', {
-        method: 'POST' ,
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify(register)})
+        fetch('http://localhost:9000/api/user/signup', {
+            method: 'POST' ,
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify(register)})
 
-        .then((res) => {
-            if(res.status !== 200) {
-                console.log(res)
-            }
-            else {
-                res.json().then(data => {
-                  console.log(data)
-                })
-                history.push('/login')
-            }
-        })
+            .then((res) => {
+                if(res.status !== 201) {
+                    console.log(res)
+                }
+                else {
+                    res.json().then(data => {
+                    console.log(data)
+                    })
+                    history.push('/login')
+                }
+            })
     }
 
     const { email, username, password, bio } = register
@@ -51,14 +51,15 @@ const Register = (props) => {
     return (
 
         <Form id="form" onSubmit={submitHandler}>
-            <Form.Group className="mb-3" controlId="formGroupEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" name="email" placeholder="Enter email" value={email} onChange={changeHandler} />
-            </Form.Group>
 
             <Form.Group className="mb-3" controlId="formGroupUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="text" name="username" placeholder="Username" value={username} onChange={changeHandler} />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formGroupEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control type="email" name="email" placeholder="Enter email" value={email} onChange={changeHandler} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formGroupPassword">

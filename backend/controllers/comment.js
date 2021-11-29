@@ -8,14 +8,12 @@ exports.createComment = async (req, res, next) => {
     const userId = jwt.getUserId(headerAuth);
     const postId = parseInt(req.params.postId);
 
-    const title = req.body.title;
     const content = req.body.content;
 
     try {
         const user = await models.User.findOne({ where: { id: userId } })
         const post = await models.Post.findOne({ where: { id: postId } })
-        const comment = await models.Comment.create({ 
-            title: title,
+        const comment = await models.Comment.create({
             content: content,
             likesCounter: 0,
             dislikesCounter: 0,
@@ -45,7 +43,7 @@ exports.modifyComment = async (req, res, next) => {
     try {
         const comment = await models.Comment.findOne({ where: { userId: userId, id: commentId } })
 
-            comment.title = title,
+            // comment.title = title,
             comment.content = content
 
             await comment.save()

@@ -11,7 +11,7 @@ exports.createPost = async (req, res, next) => {
     
     const title = req.body.title;
     const content = req.body.content;
-    const attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    const attachment =  req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null ;
 
     try {
         const user = await models.User.findOne({ where: { id: userId } })
@@ -39,8 +39,6 @@ exports.modifyPost = async (req, res, next) => {
     const headerAuth = req.headers['authorization'];
     const userId = jwt.getUserId(headerAuth)
     const postId = parseInt(req.params.postId);
-
-    console.log('test route put')
 
     const title = req.body.title;
     const content = req.body.content;
@@ -91,12 +89,16 @@ exports.deletePost = async (req, res, next) => {
 
     try {
         const post = await models.Post.findOne({ where: { userId: userId, id: postId } })
-        console.log(post.id)
-
-        const filename = post.attachment.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-            post.destroy()
-        })
+        
+        if (post.attachment) {
+            const filename = post.attachment.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+                post.destroy()
+            })
+        }
+        else {
+            post.destroy();
+        }        
       
         res.status(200).json({ message : 'post deleted' })
     }

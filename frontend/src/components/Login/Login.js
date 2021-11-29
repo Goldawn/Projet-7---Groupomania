@@ -54,7 +54,10 @@ const Login = (props) => {
     const { email, password } = login
 
       return (
-        
+      <>
+      <div className="text-center text-white">
+        <h2>Connexion</h2>
+      </div>
       <Form id="form" onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="formGroupEmail">
           <Form.Label>Email address</Form.Label>
@@ -81,6 +84,7 @@ const Login = (props) => {
           </Form.Text>
         </Form.Group>
       </Form>
+      </>
     )
 
 }

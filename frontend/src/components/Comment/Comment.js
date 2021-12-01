@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
 
 import "./Comment.css"
@@ -8,6 +8,7 @@ import "./Comment.css"
 const Comment = (props) => {
 
     const history = useHistory()
+    const location = useLocation();
 
     const loadData = (key) => {
         if(localStorage){
@@ -45,8 +46,18 @@ const Comment = (props) => {
         const bearer = "Bearer "+auth.token
         deleteComment(postId, commentId, bearer)
     }
-    const comment = props.comment ? props.comment : props.location.state.comment;
 
+    // const comment = props.comment;
+    // console.log(location.state.post)
+    // if (props.comment === 0) {
+    //     comment = location.state.post
+    // }
+    // else {
+    //     comment = props.comment;
+    // }
+
+    const comment = props.comment ? props.comment : props.location.state.comment;
+    console.log(comment)
     return(
 
         <div>
@@ -63,8 +74,6 @@ const Comment = (props) => {
                     </div>
 
                     <Card.Text>{props.comment.content}</Card.Text>
-
-                    
 
                     <div className="sub-post">
                         <div className="left-buttons">

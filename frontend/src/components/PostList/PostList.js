@@ -24,8 +24,6 @@ const PostList = (props) => {
         }
     },[posts])
 
-
-
     return (
         <div id="all-posts">
             
@@ -41,11 +39,12 @@ const PostList = (props) => {
             </Card>}
 
             <div id="create-post-container">
-                    <Link className="post-link create-post" to={{pathname: "/post/new" }}>Créer un post</Link>
+                <Link className="post-link create-post" to={{pathname: "/post/new" }}>Créer un post</Link>
             </div>
 
             {
                 posts.map((post, id) => {
+                    console.log(post)
                     return(
                         <>
                         <div>

@@ -8,6 +8,7 @@ router.post('/login', userCtrl.login);
 router.get('/profile', userCtrl.getUserProfile);
 router.put('/profile', multer ,userCtrl.updateUserProfile);
 router.delete('/profile', userCtrl.deleteUserProfile);
+router.get('/auth', userCtrl.getAuth);
 
 // router.get('/', auth, stuffCtrl.getAllPosts);
 

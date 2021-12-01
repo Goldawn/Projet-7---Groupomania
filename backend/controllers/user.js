@@ -192,3 +192,13 @@ exports.deleteUserProfile = async (req, res, next) => {
     }
 
 };
+
+exports.getAuth = async (req, res, next) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwt.getUserId(headerAuth)
+        if (userId < 0) {
+            return res.status(401).json({ message : 'token is wrong or has expired'})
+        } else {            
+            return res.status(200).json({ message : 'you are now authentified'})   
+        }
+}

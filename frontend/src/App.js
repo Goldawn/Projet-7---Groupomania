@@ -10,17 +10,9 @@ export const ThemeContext = React.createContext();
 
 const App = (props) => {
   
-  const [isAuthenticated, setIsAuthenticated] = useState();
+  const [tokenExistsInLocalStorage, setTokenExistsInLocalStorage] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [theme, setTheme] = useState('Light');
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { 
-  //     isAuthenticated: "",
-  //     auth: ""
-  //  };
-  // }
-
-  // Context = createContext();
 
   const loadData = (key) => {
     if(localStorage){
@@ -32,42 +24,53 @@ const App = (props) => {
     }
   }
 
-  // componentDidMount() {
-  //   const auth = loadData("authToken")
-    
-  //   if(!auth) {
-  //     console.log("non authentifié")
-  //     setIsAuthenticated(false)
-  //   }
-  //   else {
-  //     console.log("authentifié")
-  //     setIsAuthenticated(true)
-  //   }
-  // }
-
-  useEffect( () => {
+  useEffect(() => {
     const auth = loadData("authToken")
     
     if(!auth) {
       console.log("non authentifié")
-      setIsAuthenticated(false)
+      setTokenExistsInLocalStorage(false)
     }
     else {
-      console.log("authentifié")
-      setIsAuthenticated(true)
+      console.log("token exists in localstorage")
+      setTokenExistsInLocalStorage(true)
     }
-  })
-    
-  // const isAuthenticated = props.location.state.isAuthenticated;
+  }, [])
+
+  useEffect( () => {
+    // debugger
+    if(tokenExistsInLocalStorage) {
+      const auth = JSON.parse(loadData("authToken"))
+      const bearer = "Bearer "+auth.token
+  
+      fetch('http://localhost:9000/api/user/auth', { 
+        method: 'GET', 
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": bearer 
+        }
+      })
+      .then((res) => {
+      if(res.status === 200 ) {
+        console.log(res.status)
+        setIsAuthenticated(true)
+      } else {
+        console.log(res.status)
+        setIsAuthenticated(false)
+      }}
+      )   
+    }
+    else {
+      setIsAuthenticated(false)
+    }
+  }, [tokenExistsInLocalStorage])
 
   return(
     <ThemeContext.Provider value={{theme, setTheme}}>
       <div className="App">
-        {/* <Context.Provider value={value}> */}
           <ContainerRouter isAuthenticated={isAuthenticated}>
             <Header isAuthenticated={isAuthenticated} />
           </ContainerRouter>
-        {/* </Context.Provider>; */}
       </div>
     </ThemeContext.Provider>
     )

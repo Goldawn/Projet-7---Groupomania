@@ -1,12 +1,27 @@
-- Ajouter les likes/dislikes <WIP>
+
 - Ajouter un lightmode aux couleurs du site. <CONTEXT API>
 
-- Ajouter la gestion d'un image de profil / mettre à jour la table USER 
-- Mettre à jour la création de commentaire / supprimer le titre de la table COMMENT
 
 - Gérer les retours de réponses backend ( filter password, etc.. )
 - Optimiser le code existant et effacer le code inutilisé ( ex: backend/comments, console.log... )
 - Ajouter les variables d'environnement
 - Ajouter les gestion des roles et autorisations
 - Gérer les suppressions en cascade
-- Rédiger le Readme
+- Rédiger le Readme*
+
+
+README.md
+
+git clone https://github.com/Goldawn/Projet-7---Groupomania.git
+cd Projet-7---Groupomania\
+yarn
+# Requirement 
+nodemon
+choco install mysql
+
+npm install sequelize
+
+sequelize db:create
+sequelize db:migrate
+cd frontend\
+yarn

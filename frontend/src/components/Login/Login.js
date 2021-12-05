@@ -7,9 +7,11 @@ import './Login.css'
 
 const Login = (props) => {
 
+  console.log(props.location.state)
+
   const [login, setLogin] = useState({
-    email: "",
-    password:""
+    email: props.location.state ? props.location.state.email : "",
+    password: props.location.state ? props.location.state.pass : "",
   })
   const history = useHistory()
 

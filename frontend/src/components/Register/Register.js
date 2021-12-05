@@ -41,7 +41,7 @@ const Register = (props) => {
                     res.json().then(data => {
                     console.log(data)
                     })
-                    history.push('/login')
+                    history.push('/login', {email:register.email, pass:register.password})
                 }
             })
     }

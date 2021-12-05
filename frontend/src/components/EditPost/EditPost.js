@@ -5,9 +5,11 @@ import { useHistory } from 'react-router-dom';
 
 const EditPost = (props) => { 
 
+  console.log(props.location)
+
   const [postData, setPostData] = useState({
-    title: props.location.state.item.title,
-    content:props.location.state.item.content
+    title: props.location.state.post.title,
+    content:props.location.state.post.content
   })
   const [attachment, setAttachment] = useState();
 
@@ -41,7 +43,7 @@ const EditPost = (props) => {
 
     const auth = JSON.parse(loadData("authToken"))
     const bearer = "Bearer "+auth.token
-    const postId = props.location.state.item.id
+    const postId = props.location.state.post.id
 
     fetch(`http://localhost:9000/api/posts/${postId}`, {
       method: 'PUT',

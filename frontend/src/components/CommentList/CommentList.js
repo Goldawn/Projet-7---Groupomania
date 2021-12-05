@@ -131,7 +131,7 @@ const CommentList = (props) => {
                     console.log(data)
                     })
                     // history.push(`/`)
-                    // history.push(`/post/${postId}`)
+                    history.push(`/post/${postId}`)
                     setReload(!reload)
                 }
             })

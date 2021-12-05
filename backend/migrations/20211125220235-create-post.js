@@ -26,12 +26,12 @@ module.exports = {
       attachment: {
         type: Sequelize.STRING
       },
-      likesCounter: {
-        type: Sequelize.INTEGER
-      },
-      dislikesCounter: {
-        type: Sequelize.INTEGER
-      },
+      // likesCounter: {
+      //   type: Sequelize.INTEGER
+      // },
+      // dislikesCounter: {
+      //   type: Sequelize.INTEGER
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

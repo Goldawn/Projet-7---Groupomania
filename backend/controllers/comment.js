@@ -15,8 +15,6 @@ exports.createComment = async (req, res, next) => {
         const post = await models.Post.findOne({ where: { id: postId } })
         const comment = await models.Comment.create({
             content: content,
-            likesCounter: 0,
-            dislikesCounter: 0,
             userId: user.id,
             postId: post.id
         })

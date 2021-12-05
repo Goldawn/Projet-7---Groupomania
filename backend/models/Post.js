@@ -23,19 +23,26 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'cascade'
       });
 
-      models.Post.belongsToMany(models.User, {
-        through: 'like',
-        as: 'usersLikedPost',
+      models.Post.hasMany(models.Like, {
         foreignKey: 'postId',
+        as: 'likes',
+        allowNull: false,
+        onDelete: 'cascade'
       });
+
+      // models.Post.belongsToMany(models.User, {
+      //   through: 'like',
+      //   as: 'usersLikedPost',
+      //   foreignKey: 'postId',
+      // });
     }
   };
   Post.init({
     title: DataTypes.STRING,
     content: DataTypes.STRING,
-    attachment: DataTypes.STRING,
-    likesCounter: DataTypes.INTEGER,
-    dislikesCounter: DataTypes.INTEGER
+    attachment: DataTypes.STRING
+    // likesCounter: DataTypes.INTEGER,
+    // dislikesCounter: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Post',

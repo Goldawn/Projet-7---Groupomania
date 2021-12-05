@@ -69,3 +69,11 @@ img {
     font-size: 1em;
     font-weight: 400;;
 }
+.button-logo{
+    width: 18px;
+    filter: invert(1);
+    margin-right: 10px;
+}
+.button-logo.bigger-logo {
+    width: 22px;
+}

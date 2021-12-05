@@ -2,26 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
 
+import avatarPlaceholder from '../../images/avatar-placeholder.png'
+
 import "./Profile.css"
 
-// class Profile extends Component {
 const Profile = (props) => {
 
-    // const [ state , setState ] = useState({});
     const [ profileData , setProfileData ] = useState({});
     const [ dataIsLoaded , setDataIsLoaded ] = useState({});
 
     const history = useHistory()
-
-    // constructor(props) {
-    //     super(props);
-
-    //     this.state = {
-    //         redirect: false,
-    //         profileData: {},
-    //         DataisLoaded: false
-    //     };
-    // }
 
     useEffect(() => {
         const auth = JSON.parse(loadData("authToken"))
@@ -52,7 +42,6 @@ const Profile = (props) => {
             }
             else {                
                 setProfileData(json)
-                // setDataIsLoaded(true)
             }
         }))
     }
@@ -82,6 +71,7 @@ const Profile = (props) => {
             else {
             res.json().then(data => {
                 console.log(data)
+                localStorage.removeItem('authToken');
                 history.push('/register')
             })
             }
@@ -96,13 +86,12 @@ const Profile = (props) => {
 
     const getProfileData = (profilePic) => {
         if (profilePic === "") {
-            profilePic = "https://jeunes.sfpnet.fr/wp-content/uploads/2017/02/avatar-placeholder.png";
+            profilePic = avatarPlaceholder;
         }
         return profilePic;
     }
 
-    // const { redirect, DataisLoaded, profileData } = state;
-    const profilePic = getProfileData(profileData.attachment);        
+    const profilePic = getProfileData(profileData.attachment);
 
     if (!dataIsLoaded) {
         return (

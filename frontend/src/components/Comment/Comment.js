@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
+import avatarPlaceholder from '../../images/avatar-placeholder.png'
 
 import "./Comment.css"
 
@@ -47,6 +48,19 @@ const Comment = (props) => {
         deleteComment(postId, commentId, bearer)
     }
 
+    const renderIsAuthor = () => {
+        const auth = JSON.parse(loadData("authToken")) 
+        const userId = auth.userId;
+        if(props.comment.user.id === userId) {
+            return(
+                <>
+                <Link  className="post-button post-link" to={{pathname: "/post/"+comment.postId+"/comment/"+String(comment.id)+"/edit", state: {comment: comment} }}>edit</Link>
+                <Button className="post-button" onClick={() => handleDelete(comment.id, comment.postId)}>delete</Button>
+                </>
+            )
+        }
+    }
+
     // const comment = props.comment;
     // console.log(location.state.post)
     // if (props.comment === 0) {
@@ -66,7 +80,7 @@ const Comment = (props) => {
 
                     <div id="profile-header">
                         <div className="profile-pic-container small-pic">
-                            <img src={props.comment.user.attachment}></img>
+                            <img src={props.comment.user.attachment ? props.comment.user.attachment : avatarPlaceholder}></img>
                         </div>
                         <Card.Title className="card-title">
                             {props.comment.user.username}
@@ -77,13 +91,14 @@ const Comment = (props) => {
 
                     <div className="sub-post">
                         <div className="left-buttons">
-                            <Button className="post-button">+</Button>
-                            <Button className="post-button">-</Button>
+                            {/* <Button className="post-button">+</Button>
+                            <Button className="post-button">-</Button> */}
                         </div>
 
                         <div className="right-buttons">
-                            <Link  className="post-button post-link" to={{pathname: "comment/"+String(comment.id)+"/edit", state: {comment: comment} }}>edit</Link>
-                            <Button className="post-button" onClick={() => handleDelete(comment.id, comment.postId)}>delete</Button>
+                            {renderIsAuthor()}
+                            {/* <Link  className="post-button post-link" to={{pathname: "/post/"+comment.postId+"/comment/"+String(comment.id)+"/edit", state: {comment: comment} }}>edit</Link>
+                            <Button className="post-button" onClick={() => handleDelete(comment.id, comment.postId)}>delete</Button> */}
                         </div>
                     </div> 
                     

@@ -65,7 +65,7 @@ exports.modifyPost = async (req, res, next) => {
         }
     } else {
         try {
-            const post = await models.Post.findOne({ where: { id: userId, id: postId } })
+            const post = await models.Post.findOne({ where: { userId: userId, id: postId } })
     
                 post.title = title,
                 post.content = content
@@ -112,7 +112,7 @@ exports.deletePost = async (req, res, next) => {
 exports.getAllPosts = async (req, res, next) => {
 
     try {
-        const posts = await models.Post.findAll({ include: ['user', 'comments'] })
+        const posts = await models.Post.findAll({ include: ['user', 'comments', 'likes'] })
         
         return res.json(posts)
     }
@@ -129,7 +129,7 @@ exports.getAllPostsFromUser = async (req, res, next) => {
     try {
         const posts = await models.Post.findAll({ 
             where: { userId: userId },
-            include: ['user', 'comments'] })
+            include: ['user', 'comments', 'likes'] })
         
         return res.json(posts)
     }
@@ -149,7 +149,7 @@ exports.getSinglePost = async (req, res, next) => {
     try {
         const post = await models.Post.findOne({
             where: { id: postId },
-            include: ['user', 'comments'] })
+            include: ['user', 'comments', 'likes'] })
         
         return res.json(post)
     }

@@ -1,13 +1,19 @@
 
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
 import Comment from '../Comment/Comment';
+import commentLogo from '../../images/comment.png'
+import likeLogo from '../../images/like.png'
+import avatarPlaceholder from '../../images/avatar-placeholder.png'
 
 import './Post.css'
 
-export const DetailPost = ({ ...props }) => (   <Post detail={true} {...props} /> );
+// export const DetailPost = ({ ...props }) => (   <Post detail={true} {...props} /> );
 
 const Post = (props) => {
+    
+    // const [ test, setTest ] = useState(true);
 
     const history = useHistory()
     const location = useLocation();
@@ -42,12 +48,53 @@ const Post = (props) => {
             }
         })
     }
-    
 
+    const likePost = (postId, bearer) => {
+        fetch(`http://localhost:9000/api/posts/${postId}/vote/like`, {
+            method: 'POST',
+            headers: { 
+                "Content-Type": "application/json",
+                "authorization": bearer
+            }
+        })
+        .then((res) => {
+            if(res.status !== 200) {
+            console.log(res)
+            }
+            else {
+            res.json().then(data => {
+                console.log(data)
+                // forceUpdate()
+                // history.push(`/post/${postId}`)
+
+            })
+            }
+        })
+    }
+    
     const handleDelete = (id) => {
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
         deletePost(id, bearer)
+    }
+
+    const handleLike = (id) => {
+        const auth = JSON.parse(loadData("authToken"))
+        const bearer = "Bearer "+auth.token
+        likePost(id, bearer)
+    }
+
+    const renderIsAuthor = () => {
+        const auth = JSON.parse(loadData("authToken")) 
+        const userId = auth.userId;
+        if(props.post.userId === userId) {
+            return(
+                <>
+                <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/edit", state: {post: post} }}>edit</Link>
+                <Button className="post-button" id={post.id} onClick={() => handleDelete(post.id)}>delete</Button>
+                </>
+            )
+        }
     }
 
     console.log(props)
@@ -66,7 +113,7 @@ const Post = (props) => {
                 <Card.Body>
                     <div id="profile-header">
                         <div className="profile-pic-container medium-pic">
-                            <img src={post.user.attachment}></img>
+                            <img src={post.user.attachment ? post.user.attachment : avatarPlaceholder}></img>
                         </div>
                         <Card.Title>
                             {post.user.username}
@@ -89,13 +136,19 @@ const Post = (props) => {
 
                     <div className="sub-post">
                         <div className="left-buttons">
-                            <Button className="post-button">+ {post.likes}</Button>
-                            <Button className="post-button">- {post.dislikes}</Button>
-                            {!props.detail && <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>comment</Link> }
+                            <Button className="post-button" onClick={() => handleLike(post.id)}>
+                                <img className="button-logo" src={likeLogo}></img>{post.likes.length}
+                            </Button>
+                            
+                            {/* <Button className="post-button">- {post.dislikes}</Button> */}
+                            {!props.detail && <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>
+                                <img className="button-logo bigger-logo" src={commentLogo}></img>{post.comments.length}
+                            </Link> }
                         </div>
                         <div className="right-buttons">
-                            <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/edit", state: {post: post} }}>edit</Link>
-                            <Button className="post-button" id={post.id} onClick={() => handleDelete(post.id)}>delete</Button>
+                            {/* <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/edit", state: {post: post} }}>edit</Link> */}
+                            {/* <Button className="post-button" id={post.id} onClick={() => handleDelete(post.id)}>delete</Button> */}
+                            {renderIsAuthor()}
                         </div>
                     </div>
                     

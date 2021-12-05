@@ -27,10 +27,10 @@ const ContainerRouter = ({isAuthenticated, children}) => {
                 <Route path="/" exact component={PostList}/>
                 <Route path="/post/:postId/edit" component={EditPost}/>
                 <Route path="/post/new" component={CreatePost}/>
-                <Route path="/post/:postId" exact component={CommentList}/>
+                <Route path="/post/:postId/" exact component={CommentList}/>
                 <Route path="/post/:postId/comment/:commentId/edit" component={EditComment}/>
                 <Route path="/post/:postId/comments/new" component={CreateComment}/>
-                <Route path="/post/" component={DetailPost}/>
+                {/* <Route path="/post/" component={DetailPost}/> */}
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>
                 <Route path="/profile/edit" component={EditProfile}/>

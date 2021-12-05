@@ -12,18 +12,18 @@ module.exports = {
         allowNull: false,
         type: DataTypes.STRING
       },
-      attachment: {
-        allowNull: true,
-        type: DataTypes.STRING
-      },
-      likesCounter: {
-        allowNull: false,
-        type: DataTypes.INTEGER
-      },
-      dislikesCounter: {
-        allowNull: false,
-        type: DataTypes.INTEGER
-      },
+      // attachment: {
+      //   allowNull: true,
+      //   type: DataTypes.STRING
+      // },
+      // likesCounter: {
+      //   allowNull: false,
+      //   type: DataTypes.INTEGER
+      // },
+      // dislikesCounter: {
+      //   allowNull: false,
+      //   type: DataTypes.INTEGER
+      // },
       userId: {
         allowNull: false,
         type: DataTypes.INTEGER,

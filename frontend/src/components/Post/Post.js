@@ -9,9 +9,9 @@ import avatarPlaceholder from '../../images/avatar-placeholder.png'
 
 import './Post.css'
 
-// export const DetailPost = ({ ...props }) => (   <Post detail={true} {...props} /> );
-
 const Post = (props) => {
+
+    const [postData, setPostData] = useState()
     
     const history = useHistory()
     const location = useLocation();
@@ -62,9 +62,7 @@ const Post = (props) => {
             else {
             res.json().then(data => {
                 console.log(data)
-                // forceUpdate()
-                // history.push(`/post/${postId}`)
-
+                props.handleLikeMutation()
             })
             }
         })

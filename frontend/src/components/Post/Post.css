@@ -60,7 +60,7 @@
     max-width: 600px;
 }
 img {
-    max-width: calc(600px - 2*17px );
+    max-width: calc(600px - 2*16px );
     object-fit: contain;
 }
 .profile-pic-container.medium-pic img {

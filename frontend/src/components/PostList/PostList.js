@@ -11,11 +11,8 @@ const PostList = (props) => {
     const [ posts, setPosts ] = useState([]);
     const [ postsExists, setPostsExists ] = useState();
 
-    useEffect(() => {
-        
-        fetch("http://localhost:9000/api/posts")
-            .then((res) => res.json())
-            .then((json) => setPosts(json))
+    useEffect(() => {        
+        callApiPost()
     },[])
 
     useEffect(() => {
@@ -23,6 +20,12 @@ const PostList = (props) => {
             setPostsExists(true)
         }
     },[posts])
+
+    const callApiPost = () => {
+        fetch("http://localhost:9000/api/posts")
+            .then((res) => res.json())
+            .then((json) => setPosts(json))
+    }
 
     return (
         <div id="all-posts">
@@ -48,7 +51,7 @@ const PostList = (props) => {
                     return(
                         <>
                         <div>
-                            <Post key={id} post={post}/>
+                            <Post key={id} post={post} handleLikeMutation={() => callApiPost()}/>
                         </div>
                         </>
                     )

@@ -4,6 +4,7 @@
     width: 600px;
     margin: 20px auto 0;
     box-shadow: 0 0 20px 1px #ebebeb;
+    border: none;
 }
 .card.dark {
     background: var(--dm-card-bg-color);
@@ -43,9 +44,10 @@
     border: 1px solid var(--dm-buttons-color);
     vertical-align: middle;
     border-radius: .25rem;
+    color: white;
 }
 .post-link:hover, .post-button:hover {
-    color: inherit;
+    color: white;
     background-color: var(--dm-buttons-shadow-color);
     border-color: var(--dm-buttons-shadow-color);
 }
@@ -67,7 +69,7 @@ img {
 }
 #all-posts #profile-header .h5 {
     font-size: 1em;
-    font-weight: 400;;
+    font-weight: 400;
 }
 .button-logo{
     width: 18px;

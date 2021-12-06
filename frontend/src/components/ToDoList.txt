@@ -1,7 +1,5 @@
 
-- Ajouter un lightmode aux couleurs du site. <CONTEXT API>
-
-
+gérer les re-render de composants ave cla gestion du state
 - Gérer les retours de réponses backend ( filter password, etc.. )
 - Optimiser le code existant et effacer le code inutilisé ( ex: backend/comments, console.log... )
 - Ajouter les variables d'environnement

@@ -118,7 +118,7 @@ const Post = (props) => {
                         </Card.Title>
                     </div>
                     <Card.Title>
-                        <Link to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>{post.title }{' '+post.id }</Link>
+                        <Link to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>{post.title }</Link>
                     </Card.Title>
                 </Card.Body>
                 <Card.Img variant="top" src="" />

@@ -38,8 +38,7 @@ const App = (props) => {
     }
   }, [])
 
-  useEffect( () => {
-    // debugger
+  useEffect( () => { 
     if(tokenExistsInLocalStorage) {
       const auth = JSON.parse(loadData("authToken"))
       const bearer = "Bearer "+auth.token

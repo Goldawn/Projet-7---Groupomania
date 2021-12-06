@@ -54,7 +54,7 @@ const Header = (props) => {
         <div className="header-container">
             <a href="/">
                 <img id="site-logo" className="logo" src={groupomaniaLogo}></img>
-                <img id="site-logo-white" className="logo" src={groupomaniaWhiteLogo}></img>  [{theme}]
+                <img id="site-logo-white" className="logo" src={groupomaniaWhiteLogo}></img>
             </a>
             <div id="header-links">
                 {renderAuthenticated()}

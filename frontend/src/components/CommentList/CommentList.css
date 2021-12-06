@@ -5,7 +5,7 @@
 #all-comments .comment-container {
     margin: 0 auto;
     border-radius: 0;
-    border-top: 1px solid rgb(59, 59, 59);
+    border-top: 1px solid var(--dm-border-color)
 }
 #all-comments .comment-container .h5{
     font-size: 1em;

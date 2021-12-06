@@ -3,12 +3,15 @@ import { useHistory } from 'react-router-dom';
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import { useContext } from 'react';
 import { ThemeContext } from '../../App'
+import groupomaniaLogo from '../../logo/icon-left-font.svg'
+import groupomaniaWhiteLogo from '../../logo/icon-left-font-monochrome-white.svg'
 
 import './Header.css'
 
 const Header = (props) => {
 
     const { theme } = useContext(ThemeContext);
+    console.log(theme)
 
     const history = useHistory();
     
@@ -49,7 +52,10 @@ const Header = (props) => {
     
     <header>
         <div className="header-container">
-            <h1><a href="/">Groupomania [{theme}]</a></h1>
+            <a href="/">
+                <img id="site-logo" className="logo" src={groupomaniaLogo}></img>
+                <img id="site-logo-white" className="logo" src={groupomaniaWhiteLogo}></img>  [{theme}]
+            </a>
             <div id="header-links">
                 {renderAuthenticated()}
             </div>

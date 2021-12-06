@@ -15,7 +15,7 @@ const Login = (props) => {
   })
   const history = useHistory()
 
-   const saveData = (key, value) => {
+  const saveData = (key, value) => {
     if(localStorage){
         localStorage.setItem(key, value);
     }else {

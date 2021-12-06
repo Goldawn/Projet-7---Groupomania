@@ -1,15 +1,23 @@
 :root {
-	--dm-bg-color : black;
-	--dm-card-bg-color: rgb(27, 27, 27);
+	--dm-bg-color : rgb(255, 255, 255);
+	--dm-card-bg-color: rgb(235, 235, 235);
 	--dm-buttons-color: #501c94;
 	--dm-buttons-shadow-color: #44197c;
-	--dm-texts-color: white;
+	--dm-texts-color: rgb(0, 0, 0);
 
 	--bg-color : rgb(247, 241, 228);
 	--card-bg-color: rgb(27, 27, 27);
 	--buttons-color: #ffd7d7;
 	--buttons-color: #fd2d01;
 	--texts-color: rgb(243, 236, 221);
+}
+
+.dark-theme {
+	--dm-bg-color : black;
+	--dm-card-bg-color: rgb(27, 27, 27);
+	--dm-buttons-color: #501c94;
+	--dm-buttons-shadow-color: #44197c;
+	--dm-texts-color: white;
 }
 
 a {
@@ -29,7 +37,7 @@ button, input[type="submit"], input[type="reset"] {
 	outline: inherit;
 }
 
-.App {
+#App {
     min-height: 100vh;
     background: var(--dm-bg-color);
     padding: 100px 0;

@@ -13,8 +13,6 @@ import './Post.css'
 
 const Post = (props) => {
     
-    // const [ test, setTest ] = useState(true);
-
     const history = useHistory()
     const location = useLocation();
 

@@ -12,7 +12,8 @@ const App = (props) => {
   
   const [tokenExistsInLocalStorage, setTokenExistsInLocalStorage] = useState();
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [theme, setTheme] = useState('Light');
+  const [theme, setTheme] = useState(window.localStorage.getItem('theme') || 'light');
+ 
 
   const loadData = (key) => {
     if(localStorage){
@@ -67,7 +68,7 @@ const App = (props) => {
 
   return(
     <ThemeContext.Provider value={{theme, setTheme}}>
-      <div className="App">
+      <div id="App" className={theme}>
           <ContainerRouter isAuthenticated={isAuthenticated}>
             <Header isAuthenticated={isAuthenticated} />
           </ContainerRouter>

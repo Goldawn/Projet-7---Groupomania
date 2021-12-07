@@ -51,7 +51,7 @@ const CreateComment = (props) => {
                 else {
                     res.json().then(data => {
                     })
-                    history.push(`/post/${postId}`)
+                    // history.push(`/post/${postId}/`)
                 }
             })
     }

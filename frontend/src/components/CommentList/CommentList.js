@@ -13,19 +13,10 @@ const CommentList = (props) => {
     const [postData, setPostData]= useState();
     const [commentData, setCommentData] = useState()
     const [newComment, setNewComment] = useState()
-    const [reload, setReload] = useState(true);
-    // const [dataIsLoaded, setDataIsLoaded] = useState(false)
 
-    useEffect(() => {
-        if (props.location.state) {
-            setPostData(props.location.state.post)
-        } else {
-    
-            const postId = Number(props.location.pathname.slice(6,7))            
-            const auth = JSON.parse(loadData("authToken"))
-            const bearer = "Bearer "+auth.token
-            
-            fetch(`http://localhost:9000/api/posts/id/${postId}/`, {
+    const callApiPost = (postId, bearer) => {
+
+        fetch(`http://localhost:9000/api/posts/id/${postId}/`, {
             method: 'GET',
             headers: { 
                 "Content-Type": "application/json",
@@ -36,7 +27,20 @@ const CommentList = (props) => {
             .then((jsonPost) => {
             setPostData(jsonPost)}
             )
+    }
+
+    useEffect(() => {
+        if (props.location.state) {
+            setPostData(props.location.state.post)
+        } else {
+    
+            const paramsId = props.location.pathname
+            const postId = (paramsId.split('/'))[2]
             
+            const auth = JSON.parse(loadData("authToken"))
+            const bearer = "Bearer "+auth.token
+            
+            callApiPost(postId, bearer)            
 
             fetch(`http://localhost:9000/api/posts/${postId}/comments/`, {
                 method: 'GET',
@@ -55,7 +59,12 @@ const CommentList = (props) => {
         if(props.location.state) {
             if(props.location.state.post.comments.length>0) {
     
-                const postId = Number(props.location.pathname.slice(6,7))
+                const paramsId = props.location.pathname
+                const postId = (paramsId.split('/'))[2]
+
+                let test = props.location.pathname
+                let a = test.split('/')
+                test = test.replace(a[a.length-3] + '/', '')
                 
                 const auth = JSON.parse(loadData("authToken"))
                 const bearer = "Bearer "+auth.token
@@ -118,17 +127,15 @@ const CommentList = (props) => {
                     })
                     // history.push(`/`)
                     history.push(`/post/${postId}`)
-                    setReload(!reload)
+                    // setReload(!reload)
                 }
             })
     }
     
-    
-
     if(postData && commentData) {
         return (
             <>
-            <Post post={postData}/>
+            <Post post={postData} handleLikeMutation={() => callApiPost(postData.id)}/>
 
             <Form id="form" onSubmit={submitHandler}>
                 <Card id="top-comment"className="dark card-body">
@@ -163,7 +170,7 @@ const CommentList = (props) => {
         )
     }
     return (
-        <></>
+        <>Rien a afficher</>
     )
 
 }

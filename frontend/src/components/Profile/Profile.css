@@ -12,7 +12,7 @@
 #profile-header {
     display: flex;
     align-items: center;
-    margin-bottom: 35px;
+    margin-bottom: 15px;
 }
 .profile-pic-container img {
     width: 80px;

@@ -1,7 +1,6 @@
 
 
 - Gérer les retours de réponses backend ( filter password, etc.. )
-- Optimiser le code existant et effacer le code inutilisé ( ex: backend/comments, console.log... )
 - Ajouter les variables d'environnement
 - Ajouter les gestion des roles et autorisations
 - Gérer les suppressions en cascade

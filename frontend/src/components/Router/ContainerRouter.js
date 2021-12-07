@@ -24,18 +24,18 @@ const ContainerRouter = ({isAuthenticated, children}) => {
             <Router forceRefresh={true}>
                 {children}
                 <Switch>
-                <Route path="/" exact component={PostList}/>
-                <Route path="/post/:postId/edit" component={EditPost}/>
-                <Route path="/post/new" component={CreatePost}/>
-                <Route path="/post/:postId/" exact component={CommentList}/>
-                <Route path="/post/:postId/comment/:commentId/edit" component={EditComment}/>
-                <Route path="/post/:postId/comments/new" component={CreateComment}/>
-                {/* <Route path="/post/" component={DetailPost}/> */}
-                <Route path="/login" component={Login}/>
-                <Route path="/register" component={Register}/>
-                <Route path="/profile/edit" component={EditProfile}/>
-                <Route path="/profile" component={Profile}/>
-                <Route path="/" component= {() => <div>Erreur 404</div>}/>
+                    <Route path="/" exact component={PostList}/>
+                    <Route path="/post/:postId/edit" exact component={EditPost}/>
+                    <Route path="/post/new" exact component={CreatePost}/>
+                    <Route path="/post/:postId" exact component={CommentList}/>
+                    <Route path="/post/:postId/comment/:commentId/edit" exact component={EditComment}/>
+                    <Route path="/post/:postId/comments/new" exact component={CreateComment}/>
+
+                    <Route path="/login" component={Login}/>
+                    <Route path="/register" component={Register}/>
+                    <Route path="/profile/edit" component={EditProfile}/>
+                    <Route path="/profile" component={Profile}/>
+                    <Route path="/" component= {() => <div>Erreur 404</div>}/>
                 </Switch>
             </Router>
     
@@ -45,8 +45,8 @@ const ContainerRouter = ({isAuthenticated, children}) => {
             <Router forceRefresh={true}>
                 {children}
                 <Switch>       
-                <Route path="/register" component={Register}/>
-                <Route path="/" component={Login}/>
+                    <Route path="/register" component={Register}/>
+                    <Route path="/" component={Login}/>
                 </Switch>  
             </Router>
             

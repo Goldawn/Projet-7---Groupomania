@@ -20,7 +20,6 @@ const Profile = (props) => {
     }, [])
 
     useEffect(() => {
-        console.log(profileData)
         setDataIsLoaded(true)
     }, [profileData])
 
@@ -37,7 +36,6 @@ const Profile = (props) => {
     
         .then((res) => res.json().then((json) => {
             if(!json) {
-                console.log("token incorrect")
                 history.push('/login')
             }
             else {                
@@ -66,11 +64,10 @@ const Profile = (props) => {
         })
         .then((res) => {
             if(res.status !== 200) {
-            console.log(res)
+            return(res)
             }
             else {
             res.json().then(data => {
-                console.log(data)
                 localStorage.removeItem('authToken');
                 history.push('/register')
             })

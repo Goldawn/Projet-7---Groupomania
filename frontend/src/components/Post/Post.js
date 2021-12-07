@@ -36,11 +36,10 @@ const Post = (props) => {
         })
         .then((res) => {
             if(res.status !== 200) {
-            console.log(res)
+            return(res)
             }
             else {
             res.json().then(data => {
-                console.log(data)
                 history.push('/')
             })
             }
@@ -57,11 +56,10 @@ const Post = (props) => {
         })
         .then((res) => {
             if(res.status !== 200) {
-            console.log(res)
+                return(res)
             }
             else {
             res.json().then(data => {
-                console.log(data)
                 props.handleLikeMutation()
             })
             }
@@ -93,7 +91,6 @@ const Post = (props) => {
         }
     }
 
-    console.log(props)
     let post;
     if (props.post.length === 0) {
         post = location.state.post
@@ -101,6 +98,8 @@ const Post = (props) => {
     else {
         post = props.post;
     }
+
+    
 
     return(
 
@@ -116,7 +115,7 @@ const Post = (props) => {
                         </Card.Title>
                     </div>
                     <Card.Title>
-                        <Link to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>{post.title }</Link>
+                        <Link to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>{post.title } {post.createdAt}</Link>
                     </Card.Title>
                 </Card.Body>
                 <Card.Img variant="top" src="" />
@@ -154,7 +153,6 @@ const Post = (props) => {
             {props.detail && <>
 
                 {post.comments.map( (comment) => {
-                    console.log(comment)
                     return(                
                         <Comment key={comment.id}/>
                     )

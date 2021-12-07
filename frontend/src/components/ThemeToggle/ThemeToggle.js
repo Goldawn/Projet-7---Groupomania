@@ -19,7 +19,6 @@ const ThemeToggle = () => {
     }
 
     useEffect(() => {
-        console.log('reset le localStorage')
         saveData('theme', theme);        
     }, [theme])
 

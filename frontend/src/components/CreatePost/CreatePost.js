@@ -39,11 +39,9 @@ const CreatePost = (props) => {
             body: data})
             .then((res) => {
                 if(res.status !== 200) {
-                    console.log(res)
                 }
                 else {
                     res.json().then(data => {
-                    console.log(data)
                     })
                     history.push('/')
                 }
@@ -69,7 +67,6 @@ const CreatePost = (props) => {
                 <Form.Control type="file" name="attachment" onChange={ event => {
                    const attachment = event.target.files[0];
                    setAttachment(attachment);
-                   console.log(attachment);
                 }}/>
             </Form.Group>
 

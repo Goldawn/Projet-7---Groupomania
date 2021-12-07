@@ -112,7 +112,10 @@ exports.deletePost = async (req, res, next) => {
 exports.getAllPosts = async (req, res, next) => {
 
     try {
-        const posts = await models.Post.findAll({ include: ['user', 'comments', 'likes'] })
+        const posts = await models.Post.findAll({ 
+            include: ['user', 'comments', 'likes'],
+            order: [['createdAt', "DESC"]]
+        })
         
         return res.json(posts)
     }

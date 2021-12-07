@@ -12,7 +12,6 @@ const EditComment = (props) => {
   const history = useHistory()
 
   useEffect(() => {
-    console.log(props.location.state.comment)
   })
 
   const changeHandler = e => {
@@ -35,7 +34,6 @@ const EditComment = (props) => {
 
   const submitHandler = e => {
     e.preventDefault()
-    console.log(commentData)
 
     const auth = JSON.parse(loadData("authToken"))
     const bearer = "Bearer "+auth.token
@@ -52,11 +50,9 @@ const EditComment = (props) => {
 
       .then((res) => {
         if(res.status !== 200) {
-          console.log(res)
         }
         else {
           res.json().then(data => {
-            console.log(data)
           })
           history.push("/")
         }

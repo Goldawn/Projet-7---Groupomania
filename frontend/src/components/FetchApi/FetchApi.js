@@ -9,7 +9,6 @@ const FetchApi = (url, method, bearer) => {
     })
     .then((res) => res.json())
     .then((json) => console.log(json))
-    console.log(json)
 }
 
 export default FetchApi;

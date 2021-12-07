@@ -34,11 +34,11 @@ const Register = (props) => {
 
             .then((res) => {
                 if(res.status !== 201) {
-                    console.log(res)
+                    return(res)
                 }
                 else {
                     res.json().then(data => {
-                    console.log(data)
+                        return(data)
                     })
                     history.push('/login', {email:register.email, pass:register.password})
                 }

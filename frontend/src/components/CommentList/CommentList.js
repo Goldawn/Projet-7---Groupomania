@@ -17,14 +17,11 @@ const CommentList = (props) => {
     // const [dataIsLoaded, setDataIsLoaded] = useState(false)
 
     useEffect(() => {
-        console.log(props.location.state)
         if (props.location.state) {
             setPostData(props.location.state.post)
         } else {
     
-            const postId = Number(props.location.pathname.slice(6,7))
-            console.log(postId)
-            
+            const postId = Number(props.location.pathname.slice(6,7))            
             const auth = JSON.parse(loadData("authToken"))
             const bearer = "Bearer "+auth.token
             
@@ -37,7 +34,6 @@ const CommentList = (props) => {
             })
             .then((res) => res.json())
             .then((jsonPost) => {
-            console.log(jsonPost)
             setPostData(jsonPost)}
             )
             
@@ -73,7 +69,6 @@ const CommentList = (props) => {
                     })
                     .then((res) => res.json())
                     .then((json) => {
-                        console.log(props.location)
                         setCommentData(json)
                     }
                 )
@@ -83,12 +78,6 @@ const CommentList = (props) => {
             }         
         }
     },[postData])
-
-    // useEffect(() => {
-    //     console.log('commentData',commentData)
-    //     setDataIsLoaded(true)
-    // }, [commentData])
-
 
     const loadData = (key) => {
         if(localStorage){
@@ -101,7 +90,6 @@ const CommentList = (props) => {
     }
 
     const changeHandler = e => {
-        console.log(e.target.value)
         setNewComment(e.target.value)
     }
 
@@ -124,11 +112,9 @@ const CommentList = (props) => {
 
             .then((res) => {
                 if(res.status !== 200) {
-                    console.log(res)
                 }
                 else {
                     res.json().then(data => {
-                    console.log(data)
                     })
                     // history.push(`/`)
                     history.push(`/post/${postId}`)
@@ -140,7 +126,6 @@ const CommentList = (props) => {
     
 
     if(postData && commentData) {
-        // console.log(postData, commentData)
         return (
             <>
             <Post post={postData}/>

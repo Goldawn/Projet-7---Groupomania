@@ -7,8 +7,6 @@ import './Login.css'
 
 const Login = (props) => {
 
-  console.log(props.location.state)
-
   const [login, setLogin] = useState({
     email: props.location.state ? props.location.state.email : "",
     password: props.location.state ? props.location.state.pass : "",
@@ -33,7 +31,6 @@ const Login = (props) => {
 
   const submitHandler = e => {
     e.preventDefault()
-    console.log(login)
 
     fetch('http://localhost:9000/api/user/login', {
       method: 'POST' ,
@@ -42,7 +39,7 @@ const Login = (props) => {
 
       .then((res) => {
         if(res.status !== 200) {
-          console.log(res)
+          return(res)
         }
         else {
           res.json().then(data => {

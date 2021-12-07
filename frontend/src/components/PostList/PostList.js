@@ -47,7 +47,6 @@ const PostList = (props) => {
 
             {
                 posts.map((post, id) => {
-                    console.log(post)
                     return(
                         <>
                         <div>

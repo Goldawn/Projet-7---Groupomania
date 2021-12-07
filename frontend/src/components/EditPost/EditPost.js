@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 
 const EditPost = (props) => { 
 
-  console.log(props.location)
 
   const [postData, setPostData] = useState({
     title: props.location.state.post.title,
@@ -54,11 +53,9 @@ const EditPost = (props) => {
 
       .then((res) => {
         if(res.status !== 200) {
-          console.log(res)
         }
         else {
           res.json().then(data => {
-            console.log(data)
           })
           history.push('/')
         }
@@ -86,7 +83,6 @@ const EditPost = (props) => {
             <Form.Control type="file" name="attachment" onChange={ event => {
                 const attachment = event.target.files[0];
                 setAttachment(attachment);
-                console.log(attachment);
             }}/>
         </Form.Group>
 

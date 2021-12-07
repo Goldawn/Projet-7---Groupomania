@@ -29,11 +29,9 @@ const App = (props) => {
     const auth = loadData("authToken")
     
     if(!auth) {
-      console.log("non authentifié")
       setTokenExistsInLocalStorage(false)
     }
     else {
-      console.log("token exists in localstorage")
       setTokenExistsInLocalStorage(true)
     }
   }, [])
@@ -52,10 +50,8 @@ const App = (props) => {
       })
       .then((res) => {
       if(res.status === 200 ) {
-        console.log(res.status)
         setIsAuthenticated(true)
       } else {
-        console.log(res.status)
         setIsAuthenticated(false)
       }}
       )   

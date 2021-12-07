@@ -47,11 +47,9 @@ const CreateComment = (props) => {
 
             .then((res) => {
                 if(res.status !== 200) {
-                    console.log(res)
                 }
                 else {
                     res.json().then(data => {
-                    console.log(data)
                     })
                     history.push(`/post/${postId}`)
                 }

@@ -14,10 +14,6 @@ const EditProfile = (props) => {
 
   const history = useHistory()
 
-  useEffect(() => {
-    console.log(props.location.state.profileData)  
-  })
-
   const changeHandler = e => {
     setProfileData((previousState) => ({
       ...previousState,
@@ -56,11 +52,11 @@ const EditProfile = (props) => {
       body: data })
       .then((res) => {
         if(res.status !== 200) {
-          console.log(res)
+          return(res)
         }
         else {
           res.json().then(data => {
-            console.log(data)
+            return(data)
           })
           history.push('/profile')
         }
@@ -93,7 +89,6 @@ const EditProfile = (props) => {
                 <Form.Control type="file" name="attachment" onChange={ event => {
                    const attachment = event.target.files[0];
                    setAttachment(attachment);
-                   console.log(attachment);
                 }}/>
           </Form.Group>
         

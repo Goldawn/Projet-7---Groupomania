@@ -11,12 +11,10 @@ import './Header.css'
 const Header = (props) => {
 
     const { theme } = useContext(ThemeContext);
-    console.log(theme)
 
     const history = useHistory();
     
     useEffect( () => {
-        console.log("in header",props.isAuthenticated)
     }, [props.isAuthenticated])
 
     const renderAuthenticated = () => {
@@ -39,7 +37,6 @@ const Header = (props) => {
 
     const disconnect = () => {
         localStorage.removeItem('authToken');
-        console.log(history)
         history.push('/')
     }
 

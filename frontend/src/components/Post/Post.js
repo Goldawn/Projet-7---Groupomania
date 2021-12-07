@@ -105,7 +105,7 @@ const Post = (props) => {
 
         <div>
             <Card className="post-card dark" key={post.id}>
-                <Card.Body>
+                <Card.Body className='card-header'>
                     <div id="profile-header">
                         <div className="profile-pic-container medium-pic">
                             <img src={post.user.attachment ? post.user.attachment : avatarPlaceholder}></img>

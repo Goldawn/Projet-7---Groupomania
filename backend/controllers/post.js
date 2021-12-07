@@ -47,16 +47,23 @@ exports.modifyPost = async (req, res, next) => {
     if(attachment) {
         try {
             const post = await models.Post.findOne({ where: { id: userId, id: postId } })
-    
-            
-            const filename = post.attachment.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
-                    post.title = title,
+
+            if(post.attachment) {
+                
+                const filename = post.attachment.split('/images/')[1];
+                fs.unlink(`images/${filename}`, () => {
+                    post.title = title
                     post.content = content
-                    post.attachment = attachment;
+                    post.attachment = attachment
                     post.save()
-                })
-    
+                    })
+            } else {
+                post.title = title
+                post.content = content
+                post.attachment = attachment
+                post.save()
+            }  
+            
             return res.json(post)
         }
         catch(err) {

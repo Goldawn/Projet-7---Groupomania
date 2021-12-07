@@ -6,6 +6,9 @@
     box-shadow: 0 0 20px 1px #ebebeb;
     border: none;
 }
+.card-body {
+    padding: 1rem 1rem;
+}
 .card.dark {
     background: var(--dm-card-bg-color);
     color: var(--dm-texts-color);
@@ -20,8 +23,11 @@
     display: flex;
     justify-content: center;
 }
+.card-header {
+    padding-bottom: 0;
+}
 .card-content {
-    margin: 25px 0;
+    margin: 10px 0 25px;
 }
 .sub-post {
     display: flex;
@@ -52,7 +58,7 @@
     border-color: var(--dm-buttons-shadow-color);
 }
 .post-card p {
-    font-size: 14px;
+    font-size: 18px;
 }
 .image-container {
     /* min-height: 500px; */

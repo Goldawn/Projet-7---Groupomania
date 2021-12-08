@@ -1,10 +1,10 @@
 :root {
-	--dm-bg-color : rgb(255, 255, 255);
-	--dm-card-bg-color: rgb(235, 235, 235);
+	--dm-bg-color : rgb(235, 235, 235);
+	--dm-card-bg-color: rgb(255, 255, 255);
 	--dm-buttons-color: #c98f8f;
 	--dm-buttons-shadow-color: #aa7373;
 	--dm-texts-color: rgb(0, 0, 0);
-	--dm-border-color: rgb(223, 223, 223);
+	--dm-delete-color: rgb(218, 0, 0);
 }
 
 .dark-theme {
@@ -14,6 +14,7 @@
 	--dm-buttons-shadow-color: #44197c;
 	--dm-texts-color: white;
 	--dm-border-color: rgb(54, 54, 54);
+	--dm-delete-color: rgb(131, 0, 0);
 }
 
 a {

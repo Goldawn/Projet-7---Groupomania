@@ -25,3 +25,10 @@
     display: flex;
     justify-content: space-between;
 }
+.profile-block {
+    display: flex;
+    flex-direction: column;
+}
+.admin-tag {
+    font-size: 15px;
+}

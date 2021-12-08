@@ -1,6 +1,6 @@
 header {
     border-bottom: 1px solid var(--dm-card-bg-color);
-    background: var(--dm-bg-color);
+    background: var(--dm-card-bg-color);
     display: flex;
     justify-content: center;
     padding: 15px 0;

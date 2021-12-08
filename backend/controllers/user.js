@@ -52,6 +52,55 @@ exports.signup = (req, res, next) => {
 
 };
 
+exports.adminSignup = (req, res, next) => {
+
+    let email = req.body.email;
+    let username = req.body.username;
+    let password = req.body.password;
+    let bio = req.body.bio;
+    let attachment = ''
+    
+    if (email == null || username == null || password == null) {
+        return res.status(400).json({ 'error': 'missing parameters' });
+    }
+
+    models.User.findOne({
+        attributes: ['email'],
+        where: { email: email }
+    })
+    .then(function(userFound) {
+        if (!userFound) {
+
+            bcrypt.hash(password, 5, function( err, bcryptedPassword) {
+                let newUser = models.User.create({
+                    email: email,
+                    username: username,
+                    password: bcryptedPassword,
+                    bio: bio,
+                    attachment: attachment,
+                    isAdmin: 1
+                })
+                .then(function(newUser) {
+                    return res.status(201).json({
+                        'userId': newUser.id
+                    })
+                })
+                .catch((err) => {
+                    return res.status(500).json({ 'error': err });
+                });
+            });
+        }
+
+        else {
+            return res-status(409).json({ 'error': 'user already exists' });
+        }
+    })
+    .catch((err) => {
+        return res.status(500).json({ 'error': err });
+    });
+
+};
+
 exports.login = (req, res, next) => {
 
     let email = req.body.email;
@@ -95,7 +144,7 @@ exports.getUserProfile = async (req, res, next) => {
 
     try {
         const user = await models.User.findOne({ 
-            attributes: ['id', 'email', 'username', 'bio', 'attachment'],
+            attributes: ['id', 'email', 'username', 'bio', 'attachment', 'isAdmin'],
             where: { id: userId } ,
             include: ['posts', 'comments']
         })

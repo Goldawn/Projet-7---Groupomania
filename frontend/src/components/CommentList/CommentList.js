@@ -131,6 +131,8 @@ const CommentList = (props) => {
                 }
             })
     }
+
+    console.log(postData)
     
     if(postData && commentData) {
         return (

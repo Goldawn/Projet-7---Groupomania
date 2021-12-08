@@ -43,7 +43,7 @@ const Login = (props) => {
         }
         else {
           res.json().then(data => {
-            saveData('authToken', JSON.stringify({ "userId":data.userId, "token":data.token}))
+            saveData('authToken', JSON.stringify({"token":data.token}))
           })
           history.push('/')
       }

@@ -6,13 +6,13 @@ import Moment from 'react-moment';
 import Comment from '../Comment/Comment';
 import commentLogo from '../../images/comment.png'
 import likeLogo from '../../images/like.png'
+import editLogo from '../../images/edit.png'
+import deleteLogo from '../../images/delete.png'
 import avatarPlaceholder from '../../images/avatar-placeholder.png'
 
 import './Post.css'
 
 const Post = (props) => {
-
-    const [postData, setPostData] = useState()
     
     const history = useHistory()
     const location = useLocation();
@@ -81,16 +81,31 @@ const Post = (props) => {
 
     const renderIsAuthor = () => {
         const auth = JSON.parse(loadData("authToken")) 
-        const userId = auth.userId;
-        if(props.post.userId === userId) {
+        const tokenData = parseJwt(auth.token)
+
+        if((props.post.userId === tokenData.userId) || (tokenData.isAdmin)) {
             return(
                 <>
-                <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/edit", state: {post: post} }}>edit</Link>
-                <Button className="post-button" id={post.id} onClick={() => handleDelete(post.id)}>delete</Button>
+                <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/edit", state: {post: post} }}>
+                    <img className="button-logo" src={editLogo}></img>
+                </Link>
+                <Button className="post-button red" id={post.id} onClick={() => handleDelete(post.id)}>
+                    <img className="button-logo" src={deleteLogo}></img>
+                </Button>
                 </>
             )
         }
     }
+
+    const parseJwt = (token) => {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    }
+
 
     let post;
     if (props.post.length === 0) {
@@ -99,8 +114,6 @@ const Post = (props) => {
     else {
         post = props.post;
     }
-
-    
 
     return(
 

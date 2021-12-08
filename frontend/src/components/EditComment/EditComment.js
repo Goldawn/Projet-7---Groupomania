@@ -54,7 +54,7 @@ const EditComment = (props) => {
         else {
           res.json().then(data => {
           })
-          history.push("/")
+          history.push(`/post/${postId}`)
         }
       })
     }

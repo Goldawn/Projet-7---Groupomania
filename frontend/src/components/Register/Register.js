@@ -10,26 +10,49 @@ const Register = (props) => {
     const history = useHistory()
     
     const { register, formState: { errors }, handleSubmit } = useForm();
+    console.log(props.location.pathname)
 
     const onSubmit = data => {
-        console.log(data)
+        if(props.location.pathname === "/register/admin") {
 
-        fetch('http://localhost:9000/api/user/signup', {
-            method: 'POST' ,
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify(data)})
+            fetch('http://localhost:9000/api/user/signup-admin', {
+                method: 'POST' ,
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(data)})
+    
+                .then((res) => {
+                    if(res.status !== 201) {
+                        return(res)
+                    }
+                    else {
+                        res.json().then(data => {
+                            return(data)
+                        })
+                        history.push('/login', {email:data.email, pass:data.password})
+                    }
+                })
 
-            .then((res) => {
-                if(res.status !== 201) {
-                    return(res)
-                }
-                else {
-                    res.json().then(data => {
-                        return(data)
-                    })
-                    history.push('/login', {email:data.email, pass:data.password})
-                }
-            })
+        } else {
+            
+            fetch('http://localhost:9000/api/user/signup', {
+                method: 'POST' ,
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(data)})
+    
+                .then((res) => {
+                    if(res.status !== 201) {
+                        return(res)
+                    }
+                    else {
+                        res.json().then(data => {
+                            return(data)
+                        })
+                        history.push('/login', {email:data.email, pass:data.password})
+                    }
+                })
+        }
+
+        
     }
 
     return (

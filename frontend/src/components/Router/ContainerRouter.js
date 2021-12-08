@@ -45,7 +45,8 @@ const ContainerRouter = ({isAuthenticated, children}) => {
             <Router forceRefresh={true}>
                 {children}
                 <Switch>       
-                    <Route path="/register" component={Register}/>
+                    <Route path="/register" exact component={Register}/>
+                    <Route path="/register/admin" exact component={Register}/>
                     <Route path="/" component={Login}/>
                 </Switch>  
             </Router>

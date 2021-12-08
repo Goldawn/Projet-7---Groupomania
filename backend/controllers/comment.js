@@ -32,16 +32,14 @@ exports.createComment = async (req, res, next) => {
 exports.modifyComment = async (req, res, next) => {
 
     const headerAuth = req.headers['authorization'];
-    const userId = jwt.getUserId(headerAuth)
     const commentId = parseInt(req.params.commentId);
 
     const title = req.body.title;
     const content = req.body.content;
 
     try {
-        const comment = await models.Comment.findOne({ where: { userId: userId, id: commentId } })
+        const comment = await models.Comment.findOne({ where: { id: commentId } })
 
-            // comment.title = title,
             comment.content = content
 
             await comment.save()
@@ -57,11 +55,10 @@ exports.modifyComment = async (req, res, next) => {
 exports.deleteComment = async (req, res, next) => {
 
     const headerAuth = req.headers['authorization'];
-    const userId = jwt.getUserId(headerAuth)
     const commentId = parseInt(req.params.commentId);
 
     try {
-        const comment = await models.Comment.findOne({ where: { userId: userId, id: commentId } })
+        const comment = await models.Comment.findOne({ where: { id: commentId } })
         
             await comment.destroy();
 
@@ -104,7 +101,8 @@ exports.getCommentsFromPost = async (req, res, next) => {
     try {
         const comments = await models.Comment.findAll({ 
             where: {postId: postId},
-            include: ['user', 'Post'] 
+            include: ['user', 'Post'],
+            order: [['createdAt', "DESC"]]
         })
         
         return res.json(comments)

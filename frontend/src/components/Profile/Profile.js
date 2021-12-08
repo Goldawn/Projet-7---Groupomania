@@ -97,7 +97,7 @@ const Profile = (props) => {
     }
 
     return  (
-        
+
         <div>
 
             <Card id="profile-card" className="dark">
@@ -106,7 +106,8 @@ const Profile = (props) => {
                         <div className="profile-pic-container">
                             <img src={profilePic}></img>
                         </div>
-                        <Card.Title className="card-title">
+                        <Card.Title className="card-title profile-block">
+                            {profileData.isAdmin && <span className="admin-tag">[Admin]</span>}
                             {profileData.username}
                             <p className="App-intro">{profileData.email}</p>
                         </Card.Title>

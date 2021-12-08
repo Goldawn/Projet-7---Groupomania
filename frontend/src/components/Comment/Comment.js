@@ -51,8 +51,9 @@ const Comment = (props) => {
 
     const renderIsAuthor = () => {
         const auth = JSON.parse(loadData("authToken")) 
-        const userId = auth.userId;
-        if(props.comment.user.id === userId) {
+        const tokenData = parseJwt(auth.token)
+
+        if((props.comment.user.id === tokenData.userId) || (tokenData.isAdmin)){
             return(
                 <>
                 <Link  className="post-button post-link" to={{pathname: "/post/"+comment.postId+"/comment/"+String(comment.id)+"/edit", state: {comment: comment} }}>edit</Link>
@@ -60,6 +61,15 @@ const Comment = (props) => {
                 </>
             )
         }
+    }
+
+    const parseJwt = (token) => {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
     }
 
     const comment = props.comment ? props.comment : props.location.state.comment;

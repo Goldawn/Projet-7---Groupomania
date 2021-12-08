@@ -1,10 +1,9 @@
 get sur les profiles
 enlever les warnings
 
-- Gérer les retours de réponses backend ( filter password, etc.. )
+
 - Ajouter les variables d'environnement
-- Ajouter les gestion des roles et autorisations
-- Gérer les suppressions en cascade
+
 - Rédiger le Readme*
 
 

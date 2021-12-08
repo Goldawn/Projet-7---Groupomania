@@ -37,7 +37,6 @@ exports.createPost = async (req, res, next) => {
 exports.modifyPost = async (req, res, next) => {
 
     const headerAuth = req.headers['authorization'];
-    const userId = jwt.getUserId(headerAuth)
     const postId = parseInt(req.params.postId);
 
     const title = req.body.title;
@@ -46,7 +45,7 @@ exports.modifyPost = async (req, res, next) => {
 
     if(attachment) {
         try {
-            const post = await models.Post.findOne({ where: { id: userId, id: postId } })
+            const post = await models.Post.findOne({ where: { id: postId } })
 
             if(post.attachment) {
                 
@@ -72,7 +71,7 @@ exports.modifyPost = async (req, res, next) => {
         }
     } else {
         try {
-            const post = await models.Post.findOne({ where: { userId: userId, id: postId } })
+            const post = await models.Post.findOne({ where: { id: postId } })
     
                 post.title = title,
                 post.content = content
@@ -95,7 +94,7 @@ exports.deletePost = async (req, res, next) => {
     const postId = parseInt(req.params.postId);
 
     try {
-        const post = await models.Post.findOne({ where: { userId: userId, id: postId } })
+        const post = await models.Post.findOne({ where: { id: postId } })
         
         if (post.attachment) {
             const filename = post.attachment.split('/images/')[1];

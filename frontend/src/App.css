@@ -5,6 +5,7 @@
 	--dm-buttons-shadow-color: #aa7373;
 	--dm-texts-color: rgb(0, 0, 0);
 	--dm-delete-color: rgb(218, 0, 0);
+	--dm-delete-darker-color: rgb(173, 0, 0);
 }
 
 .dark-theme {
@@ -15,6 +16,7 @@
 	--dm-texts-color: white;
 	--dm-border-color: rgb(54, 54, 54);
 	--dm-delete-color: rgb(131, 0, 0);
+	--dm-delete-darker-color: rgb(85, 0, 0);
 }
 
 a {

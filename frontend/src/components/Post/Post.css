@@ -102,3 +102,7 @@ time {
     background-color: var(--dm-delete-color);
     border-color: var(--dm-delete-color);
 }
+button.post-button.red:hover {
+    background-color: var(--dm-delete-darker-color);
+    border-color: var(--dm-delete-darker-color);
+}

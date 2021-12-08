@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
+import Moment from 'react-moment';
 import avatarPlaceholder from '../../images/avatar-placeholder.png'
 
 import "./Comment.css"
@@ -75,6 +76,7 @@ const Comment = (props) => {
                         </div>
                         <Card.Title className="card-title">
                             {props.comment.user.username}
+                            <Moment locale="fr" fromNow>{props.comment.createdAt}</Moment>
                         </Card.Title>
                     </div>
 
@@ -86,8 +88,6 @@ const Comment = (props) => {
 
                         <div className="right-buttons">
                             {renderIsAuthor()}
-                            {/* <Link  className="post-button post-link" to={{pathname: "/post/"+comment.postId+"/comment/"+String(comment.id)+"/edit", state: {comment: comment} }}>edit</Link>
-                            <Button className="post-button" onClick={() => handleDelete(comment.id, comment.postId)}>delete</Button> */}
                         </div>
                     </div> 
                     

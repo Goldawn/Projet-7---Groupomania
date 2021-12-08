@@ -2,6 +2,7 @@
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
+import Moment from 'react-moment';
 import Comment from '../Comment/Comment';
 import commentLogo from '../../images/comment.png'
 import likeLogo from '../../images/like.png'
@@ -112,10 +113,13 @@ const Post = (props) => {
                         </div>
                         <Card.Title>
                             {post.user.username}
+                            <Moment locale="fr" fromNow>{post.createdAt}</Moment>
                         </Card.Title>
                     </div>
                     <Card.Title>
-                        <Link to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>{post.title } {post.createdAt}</Link>
+                        <Link to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>
+                            {post.title } 
+                        </Link>
                     </Card.Title>
                 </Card.Body>
                 <Card.Img variant="top" src="" />
@@ -134,15 +138,11 @@ const Post = (props) => {
                             <Button className="post-button" onClick={() => handleLike(post.id)}>
                                 <img className="button-logo" src={likeLogo}></img>{post.likes.length}
                             </Button>
-                            
-                            {/* <Button className="post-button">- {post.dislikes}</Button> */}
                             {!props.detail && <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/", state: {post: post}}}>
                                 <img className="button-logo bigger-logo" src={commentLogo}></img>{post.comments.length}
                             </Link> }
                         </div>
                         <div className="right-buttons">
-                            {/* <Link className="post-button post-link" to={{pathname: "/post/"+String(post.id)+"/edit", state: {post: post} }}>edit</Link> */}
-                            {/* <Button className="post-button" id={post.id} onClick={() => handleDelete(post.id)}>delete</Button> */}
                             {renderIsAuthor()}
                         </div>
                     </div>

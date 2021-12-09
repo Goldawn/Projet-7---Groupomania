@@ -14,6 +14,7 @@ const EditProfile = (props) => {
 
   const history = useHistory()
 
+  // on définit des nouveaux états de profileData au changement
   const changeHandler = e => {
     setProfileData((previousState) => ({
       ...previousState,
@@ -32,6 +33,9 @@ const EditProfile = (props) => {
     }
   }
 
+  // on créé un formData auquel on attache toutes les informations du profil utilisateur
+  // cet objet est ensuite envoyé dans le corps de la requête d'édition des données du profil. 
+  // Si la réponse est favorable, l'utilisateur est redirigé vers sa nouvelle page de profil
   const submitHandler = e => {
     e.preventDefault()
 

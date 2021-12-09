@@ -17,6 +17,9 @@ const Header = (props) => {
     useEffect( () => {
     }, [props.isAuthenticated])
 
+    // on met en place un affichage conditionnel.
+    // Si l'utilisateur est authentifié, alors on ajoute les boutons de céonnexion, de profil et le switch du darkmode
+    // Sinon on lui affiche le bouton de connection
     const renderAuthenticated = () => {
         if (props.isAuthenticated) {
             return (
@@ -35,11 +38,13 @@ const Header = (props) => {
         } 
     }
 
+    // on supprime le token du localStorage puis on redirige l'utilisateur
     const disconnect = () => {
         localStorage.removeItem('authToken');
         history.push('/')
     }
 
+    // fonction qui gère la deconnexion de l'utilisateur
     const handleClick = () => {
         disconnect();
     }

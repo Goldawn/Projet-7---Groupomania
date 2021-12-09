@@ -14,6 +14,7 @@ const EditPost = (props) => {
 
   const history = useHistory()
 
+  // on définit des nouveaux états du login au changement
   const changeHandler = e => {
     setPostData((previousState) => ({
       ...previousState,
@@ -32,6 +33,9 @@ const EditPost = (props) => {
     }
   }
 
+  // on créé un formData auquel on attache toutes les informations du post 
+  // cet objet est ensuite envoyé dans le corps de la requête d'édition des données du post. 
+  // Si la réponse est favorable, l'utilisateur est redirigé vers la page des posts.
   const submitHandler = e => {
     e.preventDefault()
     

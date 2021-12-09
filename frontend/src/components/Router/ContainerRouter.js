@@ -9,9 +9,7 @@ import EditProfile from '../EditProfile/EditProfile';
 import PostList from '../PostList/PostList';
 import CreatePost from '../CreatePost/CreatePost';
 import CommentList from '../CommentList/CommentList';
-import CreateComment from '../CreateComment/CreateComment';
 import EditComment from '../EditComment/EditComment';
-import {DetailPost} from '../Post/Post';
 import EditPost from '../EditPost/EditPost';
 
 
@@ -29,8 +27,6 @@ const ContainerRouter = ({isAuthenticated, children}) => {
                     <Route path="/post/new" exact component={CreatePost}/>
                     <Route path="/post/:postId" exact component={CommentList}/>
                     <Route path="/post/:postId/comment/:commentId/edit" exact component={EditComment}/>
-                    <Route path="/post/:postId/comments/new" exact component={CreateComment}/>
-
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/profile/edit" component={EditProfile}/>

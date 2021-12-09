@@ -14,7 +14,7 @@ const App = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [theme, setTheme] = useState(window.localStorage.getItem('theme') || 'light');
  
-
+// On récupère une valeur dans le localStorage
   const loadData = (key) => {
     if(localStorage){
         if(key in localStorage) {
@@ -25,6 +25,7 @@ const App = (props) => {
     }
   }
 
+  // On vérifie si l'utilisateur possède un token dans son localStorage
   useEffect(() => {
     const auth = loadData("authToken")
     
@@ -36,6 +37,7 @@ const App = (props) => {
     }
   }, [])
 
+  // On vérifie que le token est fonctionnel, sinon on retourne un false dans le state d'authentification 
   useEffect( () => { 
     if(tokenExistsInLocalStorage) {
       const auth = JSON.parse(loadData("authToken"))

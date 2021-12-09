@@ -21,6 +21,9 @@ const CreatePost = (props) => {
         }
     }
 
+    // on créé un objet formData auquel on attache les données du post
+    // L'objet est envoyé dans le corps de la requête de création de post
+    // en cas de réponse favorable, l'utilisateur est redirigé vers la page des posts
     const submitHandler = e => {
         e.preventDefault()
         const data = new FormData();

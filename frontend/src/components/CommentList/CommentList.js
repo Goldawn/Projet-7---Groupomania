@@ -14,6 +14,8 @@ const CommentList = (props) => {
     const [commentData, setCommentData] = useState()
     const [newComment, setNewComment] = useState()
 
+    // on définit une fonction qui envoie une requête de récupération d'un post sélectionné au backend
+    // la réponse est ensuite assignée au state postData
     const callApiPost = (postId, bearer) => {
 
         fetch(`http://localhost:9000/api/posts/id/${postId}/`, {
@@ -29,6 +31,10 @@ const CommentList = (props) => {
             )
     }
 
+    // on teste le contenu du state des propriétés du composant
+    // si les propriétés contiennent un objet post, alors on l'assigne au state postData
+    // si elles sont vides, alors on appelle la fonction callApiPost
+            //puis on appelle à nouveau l'api pour récupérer la liste des commentaires d'un post spécifique et les assigner au state CommentData
     useEffect(() => {
         if (props.location.state) {
             setPostData(props.location.state.post)
@@ -54,6 +60,10 @@ const CommentList = (props) => {
             }
     },[])
 
+    // on teste ici le contenu des propriétés du composant
+    // si un objet post existe, alors on récupère le nombre de commentaires attachés au post.
+    // si aucun commentaire n'est trouvé, on définit un nouvel état des données du commentaire. 
+    // si des commentaires existent, on fait une requête à l'API pour récupérer des données exhaustives sur les commentaires et on les assigne au state.
     useEffect(() => {
 
         if(props.location.state) {
@@ -61,10 +71,6 @@ const CommentList = (props) => {
     
                 const paramsId = props.location.pathname
                 const postId = (paramsId.split('/'))[2]
-
-                let test = props.location.pathname
-                let a = test.split('/')
-                test = test.replace(a[a.length-3] + '/', '')
                 
                 const auth = JSON.parse(loadData("authToken"))
                 const bearer = "Bearer "+auth.token
@@ -98,10 +104,14 @@ const CommentList = (props) => {
         }
     }
 
+    // on définit un nouveau state au changement
     const changeHandler = e => {
         setNewComment(e.target.value)
     }
 
+    // on récupères le token dans le localStorage et l'objet body qui contient les informations du nouveau commentaire
+    // L'objet est envoyé dans le corps de la requête de création du commentaire
+    // en cas de réponse favorable, l'utilisateur est redirigé vers la page du post concerné
     const submitHandler = e => {
         e.preventDefault()
         
@@ -125,14 +135,10 @@ const CommentList = (props) => {
                 else {
                     res.json().then(data => {
                     })
-                    // history.push(`/`)
                     history.push(`/post/${postId}`)
-                    // setReload(!reload)
                 }
             })
     }
-
-    console.log(postData)
     
     if(postData && commentData) {
         return (

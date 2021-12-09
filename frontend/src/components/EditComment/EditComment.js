@@ -13,7 +13,8 @@ const EditComment = (props) => {
 
   useEffect(() => {
   })
-
+  
+  // on définit des nouveaux états de profileData au changement
   const changeHandler = e => {
     setCommentData((previousState) => ({
       ...previousState,
@@ -32,6 +33,8 @@ const EditComment = (props) => {
     }
   }
 
+  // on envoie les nouvelles données dans le corps de la requête d'édition du commentaire 
+  // Si la réponse est favorable, l'utilisateur est redirigé vers sa nouvelle page du post commenté
   const submitHandler = e => {
     e.preventDefault()
 

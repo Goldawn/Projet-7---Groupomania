@@ -1,7 +1,6 @@
 
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
 import Moment from 'react-moment';
 import Comment from '../Comment/Comment';
 import commentLogo from '../../images/comment.png'

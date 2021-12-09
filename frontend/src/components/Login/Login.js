@@ -13,6 +13,7 @@ const Login = (props) => {
   })
   const history = useHistory()
 
+  // on récupère une paire clé/valeur et on la stocke dans le localStorage
   const saveData = (key, value) => {
     if(localStorage){
         localStorage.setItem(key, value);
@@ -21,6 +22,7 @@ const Login = (props) => {
     }
   }
 
+  // on définit des nouveaux états du login au changement
   const changeHandler = e => {
     setLogin((previousState) => ({
       ...previousState,
@@ -29,6 +31,8 @@ const Login = (props) => {
     )
   }
 
+  // on envoie la requête de connection au backend avec les informations présentes dans le state.
+  // en cas de répones favorable, on stocke le token dans le localStorage puis on redirige l'utilisateur à la racine de l'application.
   const submitHandler = e => {
     e.preventDefault()
 

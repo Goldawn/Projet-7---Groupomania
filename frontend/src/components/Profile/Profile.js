@@ -13,17 +13,19 @@ const Profile = (props) => {
 
     const history = useHistory()
 
+    // On récupère le token de l'utilisateur pui on le passe en paramètre de getData
     useEffect(() => {
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
         getData(bearer);
     }, [])
 
-    useEffect(() => {
-        setDataIsLoaded(true)
-    }, [profileData])
+    // useEffect(() => {
+    //     setDataIsLoaded(true)
+    // }, [profileData])
 
-
+    // On envoie la requête de récupération des données de l'utilisateur.
+    // en cas de réponse favorable, le state est mis à jour, sinon l'utilisateur est redirigé sur la page de connection
     const getData = (bearer) => {
 
         fetch('http://localhost:9000/api/user/profile', {
@@ -54,6 +56,8 @@ const Profile = (props) => {
         }
     }
 
+    // On envoie la requête de suppression des données de l'utilisateur.
+    // en cas de réponse favorable, on efface son token du localStorage, puis on le redirige vers la page de création de compte.
     const deleteProfile = (bearer) => {
         fetch(`http://localhost:9000/api/user/profile`, {
             method: 'DELETE',
@@ -81,6 +85,7 @@ const Profile = (props) => {
         deleteProfile(bearer)
     }
 
+    // on teste ici si le profil dispose d'une image de profil, s'il n'en a pas encoer ajouté, on définit une image par défaut.
     const getProfileData = (profilePic) => {
         if (profilePic === "") {
             profilePic = avatarPlaceholder;

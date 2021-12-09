@@ -10,9 +10,12 @@ const Register = (props) => {
     const history = useHistory()
     
     const { register, formState: { errors }, handleSubmit } = useForm();
-    console.log(props.location.pathname)
 
+    // On teste les champs du formulaire avec les fonctionnalitées de react-hook-form, si les champs sont valides, alors les informations sont envoyées au backend.
+    // En cas de réponse favorable, l'utilisateur est redirigé, et ces informations de connection sont transmises au composant de login
     const onSubmit = data => {
+
+        // on teste ici l'url, et on envoie sur la route de création de compte administrateur
         if(props.location.pathname === "/register/admin") {
 
             fetch('http://localhost:9000/api/user/signup-admin', {
@@ -33,7 +36,8 @@ const Register = (props) => {
                 })
 
         } else {
-            
+
+            // ici, on envoie les données vers la route de création de compte
             fetch('http://localhost:9000/api/user/signup', {
                 method: 'POST' ,
                 headers: { "Content-Type": "application/json"},

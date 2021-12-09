@@ -22,8 +22,9 @@ const Comment = (props) => {
         }
     }
 
-    const deleteComment = (postId, testId, bearer) => {
-        fetch(`http://localhost:9000/api/posts/${postId}/comments/${testId}`, {
+    // on envoie au backend les informations pour supprimer un commentaire ciblé, en cas de réponse favorable, on redirige l'utilisateur 
+    const deleteComment = (postId, commentId, bearer) => {
+        fetch(`http://localhost:9000/api/posts/${postId}/comments/${commentId}`, {
             method: 'DELETE',
             headers: { 
                 "Content-Type": "application/json",
@@ -43,12 +44,14 @@ const Comment = (props) => {
         })
     }
     
+    // une fonction qui prépare à la suppression du commentaire 
     const handleDelete = (commentId, postId) => {
         const auth = JSON.parse(loadData("authToken"))
         const bearer = "Bearer "+auth.token
         deleteComment(postId, commentId, bearer)
     }
 
+    // on test le token de l'utilisateur, si l'utilisateur est l'auteur ou bien administrateur, alors on retourne les boutons d'administration dans le commentaire
     const renderIsAuthor = () => {
         const auth = JSON.parse(loadData("authToken")) 
         const tokenData = parseJwt(auth.token)
@@ -63,6 +66,7 @@ const Comment = (props) => {
         }
     }
 
+    // on récupère et décode le token, puis on retourne les données ainsi récupérées
     const parseJwt = (token) => {
         var base64Url = token.split('.')[1];
         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -72,8 +76,9 @@ const Comment = (props) => {
         return JSON.parse(jsonPayload);
     }
 
+    // on attribue les données à l'objet commentaire 
     const comment = props.comment ? props.comment : props.location.state.comment;
-    console.log(comment)
+
     return(
 
         <div>

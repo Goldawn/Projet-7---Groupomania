@@ -7,10 +7,10 @@ Septième projet proposé dans le cadre de la formation de développeur web d'Op
 La plateforme doit permettre des échanges entre les utilisateurs sur le modèle d'autres sites comme 9gag ou encore reddit. Des logos ont été fournis pour définir une charte graphique.
 L'utilisation d'une base de données relationnelles qui se manipule avec le langage SQL était obligatoire.
 
-Backend :   Utilisation de Node.js ainsi que du Framework Express
+**Backend** :   Utilisation de Node.js ainsi que du Framework Express
             Base de données MySQL et utilisation de l'ORM Sequelize.
 
-Frontend : Utilisation de la librairie JavaScript React.
+**Frontend** : Utilisation de la librairie JavaScript React.
 
 ### Principales fonctionnalités :
 

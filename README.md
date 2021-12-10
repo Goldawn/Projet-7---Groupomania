@@ -62,4 +62,4 @@ yarn start
 3. Tester l'application 
 
 - L'application est accessible à l'adresse : localhost:3000
-- L'accès au backend est à l'adresse : localshost:9000
+- L'accès au backend est à l'adresse : localhost:9000

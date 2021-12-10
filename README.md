@@ -40,10 +40,11 @@ git clone https://github.com/Goldawn/Projet-7---Groupomania.git
 
 # Base de données MySQL
 MySQL doit être installé sur la machine
+Dans le dossier backend, aller sur le fichier config.json et remplacez la valeur du "password" par votre mot de passe (initialisé à null)
 ```bash
 cd backend
-sequelize db:create
-sequelize db:migrate
+npx sequelize db:create
+npx sequelize db:migrate
 ```
 # Backend
 ```bash

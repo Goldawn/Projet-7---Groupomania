@@ -36,4 +36,29 @@ Les modérateurs ont accès à toutes les fonctionnalités ci-dessus, et peuvent
 ```bash
 git clone https://github.com/Goldawn/Projet-7---Groupomania.git
 ```
-2. 
+2. Mise en place de l'environnement 
+
+# Base de données MySQL
+MySQL doit être installé sur la machine
+```bash
+cd backend
+sequelize db:create
+sequelize db:migrate
+```
+# Backend
+```bash
+cd backend
+npm install
+node server
+```
+# Frontend
+```bash
+cd frontend
+npm install
+yarn start
+```
+
+3. Tester l'application 
+
+- L'application est accessible à l'adresse : localhost:3000
+- L'accès au backend est à l'adresse : localshost:9000

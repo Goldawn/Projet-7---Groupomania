@@ -38,21 +38,21 @@ git clone https://github.com/Goldawn/Projet-7---Groupomania.git
 ```
 2. Mise en place de l'environnement 
 
-# Base de données MySQL
-MySQL doit être installé sur la machine
+### Base de données MySQL
+MySQL doit être installé sur la machine.  
 Dans le dossier backend, aller sur le fichier config.json et remplacez la valeur du "password" par votre mot de passe (initialisé à null)
 ```bash
 cd backend
 npx sequelize db:create
 npx sequelize db:migrate
 ```
-# Backend
+### Backend
 ```bash
 cd backend
 npm install
 node server
 ```
-# Frontend
+### Frontend
 ```bash
 cd frontend
 npm install

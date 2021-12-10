@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link, useHistory } from "react-router-dom";
-
+import loadData from '../../functions/loadData'
 import avatarPlaceholder from '../../images/avatar-placeholder.png'
 
 import "./Profile.css"
@@ -9,7 +9,6 @@ import "./Profile.css"
 const Profile = (props) => {
 
     const [ profileData , setProfileData ] = useState({});
-    const [ dataIsLoaded , setDataIsLoaded ] = useState({});
 
     const history = useHistory()
 
@@ -44,16 +43,7 @@ const Profile = (props) => {
                 setProfileData(json)
             }
         }))
-    }
-
-    const loadData = (key) => {
-        if(localStorage){
-            if(key in localStorage) {
-                return localStorage.getItem(key);
-            }
-        } else {
-            alert("Web Storage is not supported");
-        }
+        
     }
 
     // On envoie la requête de suppression des données de l'utilisateur.
@@ -95,16 +85,9 @@ const Profile = (props) => {
 
     const profilePic = getProfileData(profileData.attachment);
 
-    if (!dataIsLoaded) {
-        return (
-        <div className="App">No data</div>
-        )
-    }
-
     return  (
 
-        <div>
-
+        <>
             <Card id="profile-card" className="dark">
                 <Card.Body>
                     <div id="profile-header">
@@ -124,51 +107,11 @@ const Profile = (props) => {
                 <Card.Body>
                     <div className="profile-buttons">
                         <Link className="post-button post-link" to={{pathname: "/profile/edit", state: {profileData: profileData}}}>Modifier le profil</Link>
-                        <Button className="post-button" onClick={() => handleDelete()}>Supprimer le profil</Button>
+                        <Button className="post-button red" onClick={() => handleDelete()}>Supprimer le profil</Button>
                     </div>
                 </Card.Body>
-                                    
             </Card>
-
-            {/* {
-                profileData.posts.map((post) => {
-                    return( 
-                        <Card key={post.id} className="dark">
-                            <Card.Body>
-                                <Card.Title>{ post.title } { post.id }</Card.Title>
-                            </Card.Body>
-                            <Card.Body>
-                                <Card.Text>
-                                { post.content }
-                                </Card.Text>
-                                <Button variant="primary">Add a comment</Button>
-                            </Card.Body>
-                        </Card>
-                    )
-                })
-
-            }
-
-            {
-                profileData.comments.map((post) => {
-                    return( 
-                        <Card key={post.id} className="dark">
-                            <Card.Body>
-                                <Card.Title>{ post.title } { post.id }</Card.Title>
-                            </Card.Body>
-                            <Card.Body>
-                                <Card.Text>
-                                { post.content }
-                                </Card.Text>
-                                <Button variant="primary">Add a comment</Button>
-                            </Card.Body>
-                        </Card>
-                    )
-                })
-
-            } */}
-
-        </div>
+        </>
     )
 
 }

@@ -1,18 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { ThemeContext } from '../../App'
 import Switch from 'react-switch';
+import saveData from '../../functions/saveData'
 
 const ThemeToggle = () => {
 
     const { theme, setTheme } = useContext(ThemeContext);
-
-    const saveData = (key, value) => {
-        if(localStorage){
-            localStorage.setItem(key, value);
-        }else {
-            alert("Web Storage is not supported");
-        }
-    }
 
     const handleThemeToggle = () => {
         setTheme(theme === 'light' ? 'dark-theme' : 'light');

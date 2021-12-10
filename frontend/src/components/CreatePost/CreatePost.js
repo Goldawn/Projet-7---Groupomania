@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import loadData from '../../functions/loadData'
 
 
 const CreatePost = (props) => {
@@ -10,16 +11,6 @@ const CreatePost = (props) => {
     const [attachment, setAttachment] = useState();
 
     const history = useHistory()
-
-    const loadData = (key) => {
-        if(localStorage){
-          if(key in localStorage) {
-              return localStorage.getItem(key);
-            }
-          } else {
-          alert("Web Storage is not supported");
-        }
-    }
 
     // on créé un objet formData auquel on attache les données du post
     // L'objet est envoyé dans le corps de la requête de création de post

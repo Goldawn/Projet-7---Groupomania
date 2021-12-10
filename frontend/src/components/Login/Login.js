@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
+import saveData from '../../functions/saveData'
 
 import './Login.css'
 
@@ -12,15 +13,6 @@ const Login = (props) => {
     password: props.location.state ? props.location.state.pass : "",
   })
   const history = useHistory()
-
-  // on récupère une paire clé/valeur et on la stocke dans le localStorage
-  const saveData = (key, value) => {
-    if(localStorage){
-        localStorage.setItem(key, value);
-    }else {
-        alert("Web Storage is not supported");
-    }
-  }
 
   // on définit des nouveaux états du login au changement
   const changeHandler = e => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import loadData from '../../functions/loadData'
 
 
 const EditComment = (props) => { 
@@ -21,16 +22,6 @@ const EditComment = (props) => {
       [e.target.name]: e.target.value
     })
     )
-  }
-
-  const loadData = (key) => {
-    if(localStorage){
-      if(key in localStorage) {
-          return localStorage.getItem(key);
-        }
-      } else {
-      alert("Web Storage is not supported");
-    }
   }
 
   // on envoie les nouvelles données dans le corps de la requête d'édition du commentaire 

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
+import loadData from '../../functions/loadData'
 import avatarPlaceholder from '../../images/avatar-placeholder.png'
 
 import "./Comment.css"
@@ -11,16 +12,6 @@ const Comment = (props) => {
 
     const history = useHistory()
     const location = useLocation();
-
-    const loadData = (key) => {
-        if(localStorage){
-          if(key in localStorage) {
-              return localStorage.getItem(key);
-            }
-          } else {
-          alert("Web Storage is not supported");
-        }
-    }
 
     // on envoie au backend les informations pour supprimer un commentaire ciblé, en cas de réponse favorable, on redirige l'utilisateur 
     const deleteComment = (postId, commentId, bearer) => {

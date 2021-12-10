@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import loadData from '../../functions/loadData'
 
 
 const EditPost = (props) => { 
@@ -23,15 +24,6 @@ const EditPost = (props) => {
     )
   }
 
-  const loadData = (key) => {
-    if(localStorage){
-      if(key in localStorage) {
-          return localStorage.getItem(key);
-        }
-      } else {
-      alert("Web Storage is not supported");
-    }
-  }
 
   // on créé un formData auquel on attache toutes les informations du post 
   // cet objet est ensuite envoyé dans le corps de la requête d'édition des données du post. 

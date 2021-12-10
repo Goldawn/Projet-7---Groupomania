@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import loadData from '../../functions/loadData'
 
 
 const EditProfile = (props) => { 
@@ -21,16 +22,6 @@ const EditProfile = (props) => {
       [e.target.name]: e.target.value
     })
     )
-  }
-
-  const loadData = (key) => {
-    if(localStorage){
-      if(key in localStorage) {
-          return localStorage.getItem(key);
-        }
-      } else {
-      alert("Web Storage is not supported");
-    }
   }
 
   // on créé un formData auquel on attache toutes les informations du profil utilisateur

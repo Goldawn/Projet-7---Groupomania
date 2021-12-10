@@ -3,7 +3,9 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap';
 import Moment from 'react-moment';
 import Comment from '../Comment/Comment';
+import loadData from '../../functions/loadData'
 import commentLogo from '../../images/comment.png'
+import parseJwt from '../../functions/parseJwt'
 import likeLogo from '../../images/like.png'
 import editLogo from '../../images/edit.png'
 import deleteLogo from '../../images/delete.png'
@@ -15,16 +17,6 @@ const Post = (props) => {
     
     const history = useHistory()
     const location = useLocation();
-
-    const loadData = (key) => {
-        if(localStorage){
-          if(key in localStorage) {
-              return localStorage.getItem(key);
-            }
-          } else {
-          alert("Web Storage is not supported");
-        }
-    }  
 
     const deletePost = (postId, bearer) => {
         fetch(`http://localhost:9000/api/posts/${postId}`, {
@@ -95,16 +87,6 @@ const Post = (props) => {
             )
         }
     }
-
-    const parseJwt = (token) => {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    }
-
 
     let post;
     if (props.post.length === 0) {

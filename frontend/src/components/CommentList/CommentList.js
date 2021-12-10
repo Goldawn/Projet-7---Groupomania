@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Card, Form, Button } from 'react-bootstrap';
+import loadData from '../../functions/loadData'
 import Comment from '../Comment/Comment'
 import Post from '../Post/Post'
 
@@ -93,16 +94,6 @@ const CommentList = (props) => {
             }         
         }
     },[postData])
-
-    const loadData = (key) => {
-        if(localStorage){
-          if(key in localStorage) {
-              return localStorage.getItem(key);
-            }
-          } else {
-          alert("Web Storage is not supported");
-        }
-    }
 
     // on définit un nouveau state au changement
     const changeHandler = e => {

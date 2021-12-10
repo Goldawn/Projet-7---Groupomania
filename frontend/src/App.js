@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import loadData from './functions/loadData'
 import ContainerRouter from './components/Router/ContainerRouter';
 import Header from './components/Header/Header';
 
@@ -14,17 +14,6 @@ const App = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [theme, setTheme] = useState(window.localStorage.getItem('theme') || 'light');
  
-// On récupère une valeur dans le localStorage
-  const loadData = (key) => {
-    if(localStorage){
-        if(key in localStorage) {
-            return localStorage.getItem(key);
-        }
-    } else {
-        alert("Web Storage is not supported");
-    }
-  }
-
   // On vérifie si l'utilisateur possède un token dans son localStorage
   useEffect(() => {
     const auth = loadData("authToken")
